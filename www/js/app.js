@@ -21,7 +21,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+      $ionicConfigProvider.platform.ios.tabs.style('standard');
+      $ionicConfigProvider.platform.ios.tabs.position('bottom');
+      $ionicConfigProvider.platform.android.tabs.style('standard');
+      $ionicConfigProvider.platform.android.tabs.position('standard');
+
+      $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+      $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+
+      $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
+      $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
+
+      $ionicConfigProvider.platform.ios.views.transition('ios');
+      $ionicConfigProvider.platform.android.views.transition('android');
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -48,31 +61,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.friends', {
+      url: '/friends',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-friends': {
+          templateUrl: 'templates/tab-friends.html',
+          controller: 'FriendsCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.friend-detail', {
+      url: '/friends/:friendId',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-friends': {
+          templateUrl: 'templates/friend-detail.html',
+          controller: 'FriendDetailCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.settings', {
+    url: '/settings',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
     }
   });

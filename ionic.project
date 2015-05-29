@@ -1,4 +1,12 @@
 {
   "name": "panderboo",
-  "app_id": ""
+  "app_id": "46597268",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }
