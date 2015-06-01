@@ -1,52 +1,92 @@
 <ion-view view-title="Panderboo">
-    <ion-content class="padding">
+    <ion-content>
 
-        <div class="list card">
+        <div class="list minimal-padding">
+
+            <div class="item item-avatar" ng-repeat="question in questions">
+                <i class="icon {{question.icon}}"></i>
+                <h2><img class="small-avatar" ng-src="{{question.img}}"><strong>{{question.username}}</strong></h2>
+                <h5>{{question.status}} - {{question.date}}</h5>
+                <p>{{question.text}}</p>
+            </div>
+
+            <div class="item item-divider">
+                Test Data
+            </div>
             <div class="item item-avatar">
-                <img src="https://pbs.twimg.com/profile_images/1359362275/photo_bigger.JPG">
-                <h3>What do you think of Panderboo?</h3>
-                <p>It's amazing!</p>
+                <i class="icon ion-ios-bell"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Unread - Asked of you 4 minutes ago</h5>
+                <p>What time is bed time?</p>
             </div>
-        </div>
-
-        <div class="list card">
-            <div class="item item-avatar-right" style="text-align: right">
-                <img src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg">
-                <h3>When are you going to Disneyland next?</h3>
-                <p>We are planning on going this weekend!</p>
-            </div>
-        </div>
-
-        <div class="list card">
-            <div class="item item-avatar-right" style="text-align: right">
-                <img src="https://pbs.twimg.com/profile_images/378800000770925025/90c519f395812bce5f43939d087afd96_bigger.jpeg">
-                <h3>Are you guys happy to be back in OC?</h3>
-                <p>OMG yes!</p>
-            </div>
-        </div>
-
-        <div class="list card">
             <div class="item item-avatar">
-                <img src="https://pbs.twimg.com/profile_images/1359362275/photo_bigger.JPG">
-                <h3>Where were you born?</h3>
-                <p>Long Beach, CA!</p>
+                <i class="icon ion-ios-bell-outline"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg"><strong>Sally Ellis</strong></h2>
+                <h5>Unread - Asked by you 37 minutes ago</h5>
+                <p>Have you ever been in a beauty pageant?</p>
             </div>
-        </div>
-
-        <div class="list card">
             <div class="item item-avatar">
-                <img src="https://pbs.twimg.com/profile_images/1359362275/photo_bigger.JPG">
-                <h3>Is this a stupid question?</h3>
-                <p>There are no stupid questions!</p>
+                <i class="icon ion-ios-eye-outline"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/378800000770925025/90c519f395812bce5f43939d087afd96_bigger.jpeg"><strong>DeeTay</strong></h2>
+                <h5>Read - Asked by you today at 6:39PM</h5>
+                <p>How many tattoos do you have?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-bell"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Unread - Asked of you today at 2:33PM</h5>
+                <p>If you don't have any, have you ever thought of getting one?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-chatboxes-outline"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg"><strong>Sally Ellis</strong></h2>
+                <h5>Unanswered - Polled today at 7:21AM</h5>
+                <p>What did you do for your last birthday?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-checkmark-outline"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/378800000770925025/90c519f395812bce5f43939d087afd96_bigger.jpeg"><strong>DeeTay</strong></h2>
+                <h5>Answered - Asked by you yesterday at 8:14PM</h5>
+                <p>Do you carry a donor card?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-chatboxes"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg"><strong>Sally Ellis</strong></h2>
+                <h5>Answered - Polled yesterday at 11:53AM</h5>
+                <p>Who was the last person you ate dinner with?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-eye"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Read - Asked of you 2 days ago</h5>
+                <p>Is the glass half empty or half full?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-checkmark"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Answered - Asked of you 6 days ago</h5>
+                <p>What's the farthest-away place you've been?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-checkmark-outline"></i>
+                <h2><img class="small-avatar" src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg"><strong>Sally Ellis</strong></h2>
+                <h5>Answered - Asked by you May 23rd @ 4:42PM</h5>
+                <p>When's the last time you ate a homegrown tomato?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-checkmark"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Answered - Asked of you May 22nd @ 8:11AM</h5>
+                <p>Have you ever won a trophy?</p>
+            </div>
+            <div class="item item-avatar">
+                <i class="icon ion-ios-checkmark"></i>
+                <h2><strong>Anonymous</strong></h2>
+                <h5>Answered - Asked of you May 20th @ 3:31AM</h5>
+                <p>Are you a good cook?</p>
             </div>
         </div>
 
-        <div class="list card">
-            <div class="item item-avatar-right" style="text-align: right">
-                <img src="https://pbs.twimg.com/profile_images/383577663/sally_bigger.jpg">
-                <h3>Do you like your new job?</h3>
-                <p>So much, Lori is great!</p>
-            </div>
-        </div>
+
     </ion-content>
 </ion-view>

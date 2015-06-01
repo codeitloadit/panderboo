@@ -1,0 +1,21 @@
+<ion-view view-title="Login">
+    <ion-content class="padding">
+        <div class="center">
+            <br/>
+            <img src="http://fc05.deviantart.net/fs70/f/2012/331/e/4/panda_logo_by_kireyanna-d5mcdf4.jpg">
+            <br/>
+            <br/>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="email" placeholder="Email" ng-model="data.email" required>
+            </label>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.password" required>
+            </label>
+        </div>
+        <button class="button button-block button-positive" ng-click="login()">Login</button>
+    </ion-content>
+</ion-view>

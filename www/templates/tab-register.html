@@ -1,0 +1,31 @@
+<ion-view view-title="Register">
+    <ion-content class="padding">
+        <div class="center">
+            <br/>
+            <h1>Panderboo</h1>
+            <h4>This is where the sub title will go</h4>
+            <br/>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="Full Name" ng-model="data.full_name" required>
+            </label>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="Email" ng-model="data.email" required>
+            </label>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.password" required>
+            </label>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="password" placeholder="Password Again" ng-model="data.confirm" required>
+            </label>
+        </div>
+        <button class="button button-block button-positive" ng-click="register()">Register</button>
+    </ion-content>
+</ion-view>

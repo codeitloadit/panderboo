@@ -6,18 +6,28 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Dashboard" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/dash">
+  <ion-tab title="Dashboard" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/dash" ng-if="is_authenticated">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 
   <!-- Friends Tab -->
-  <ion-tab title="Friends" icon-off="ion-ios-people-outline" icon-on="ion-ios-people" href="#/tab/friends">
+  <ion-tab title="Friends" icon-off="ion-ios-people-outline" icon-on="ion-ios-people" href="#/tab/friends" ng-if="is_authenticated">
     <ion-nav-view name="tab-friends"></ion-nav-view>
   </ion-tab>
 
   <!-- Settings Tab -->
-  <ion-tab title="Settings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/settings">
+  <ion-tab title="Settings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/settings" ng-if="is_authenticated">
     <ion-nav-view name="tab-settings"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Login Tab -->
+  <ion-tab title="Login" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" href="#/tab/login" ng-if="!is_authenticated">
+    <ion-nav-view name="tab-login"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Register Tab -->
+  <ion-tab title="Register" icon-off="ion-ios-compose-outline" icon-on="ion-ios-compose" href="#/tab/register" ng-if="!is_authenticated">
+    <ion-nav-view name="tab-register"></ion-nav-view>
   </ion-tab>
 
 

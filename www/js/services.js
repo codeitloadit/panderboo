@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('panderboo.services', [])
 
 .factory('Friends', function() {
   // Might use a resource here that returns a JSON array
