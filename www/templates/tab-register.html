@@ -1,5 +1,6 @@
 <ion-view view-title="Register">
     <ion-content class="padding">
+        <button class="button button-block button-outline button-assertive" ng-repeat="error in errors">{{error}}</button>
         <div class="list">
             <label class="item item-input">
                 <input type="text" placeholder="Full Name" ng-model="data.full_name" required>

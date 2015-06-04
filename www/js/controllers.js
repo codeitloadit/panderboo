@@ -1,25 +1,21 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, Auth) {
-        $scope.authData = Auth.$getAuth();
-        //var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
-        //$scope.questions = $firebaseObject(ref);
+    .controller('DashCtrl', function ($scope, $location, $firebaseObject) {
+        var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
+        $scope.questions = $firebaseObject(ref);
     })
 
-    .controller('FriendsCtrl', function ($scope, Auth) {
-        $scope.authData = Auth.$getAuth();
+    .controller('FriendsCtrl', function ($scope) {
     })
 
-    .controller('FriendDetailCtrl', function ($scope, Auth) {
-        $scope.authData = Auth.$getAuth();
+    .controller('FriendDetailCtrl', function ($scope) {
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, Auth) {
-        $scope.authData = Auth.$getAuth();
-
+    .controller('SettingsCtrl', function ($scope, $location, $rootScope, Auth) {
         $scope.logout = function () {
             Auth.$unauth();
-            $state.go('tab.login');
+            $rootScope.authData = null;
+            $location.path('anon/login');
         };
 
         //$scope.addQuestion = function () {
@@ -35,33 +31,30 @@ angular.module('panderboo.controllers', ['firebase'])
         //};
     })
 
-    .controller('LoginCtrl', function ($scope, $state, Auth) {
-        $scope.authData = Auth.$getAuth();
-        if ($scope.authData) {
-            $state.go('tab.dash')
-        }
-
+    .controller('LoginCtrl', function ($scope, $location, $rootScope, Auth) {
         $scope.data = {};
+        $scope.errors = [];
 
         $scope.login = function () {
-            console.log('Login');
+            $scope.errors = [];
             Auth.$authWithPassword({
                 email: $scope.data.email,
                 password: $scope.data.password
             }).then(function (authData) {
-                console.log('then');
-                $state.go('tab.dash');
+                $rootScope.authData = authData;
+                $location.path('tab/dash');
             }).catch(function (error) {
-                console.log('Login Failed!', error);
+                $scope.errors.push(error.toString());
             });
         };
     })
 
-    .controller('RegisterCtrl', function ($scope, $state, Auth) {
-        $scope.authData = Auth.$getAuth();
+    .controller('RegisterCtrl', function ($scope, $state, $rootScope, Auth) {
         $scope.data = {};
+        $scope.errors = [];
 
         $scope.register = function () {
+            $scope.errors = [];
             Auth.$createUser({
                 email: $scope.data.email,
                 password: $scope.data.password
@@ -70,12 +63,13 @@ angular.module('panderboo.controllers', ['firebase'])
                     email: $scope.data.email,
                     password: $scope.data.password
                 }).then(function (authData) {
+                    $rootScope.authData = authData;
                     $state.go('tab.dash');
                 }).catch(function (error) {
-                    console.log('Login Failed!', error);
+                    $scope.errors.push(error.toString());
                 });
             }).catch(function (error) {
-                console.log('Error creating user:', error);
+                $scope.errors.push(error.toString());
             });
         };
     });

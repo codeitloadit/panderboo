@@ -1,6 +1,6 @@
 angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase'])
 
-    .run(function($ionicPlatform, $rootScope, $firebaseAuth, $state) {
+    .run(function($ionicPlatform, $rootScope, $state, Auth) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -13,7 +13,16 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        //$rootScope.authData = Auth.$getAuth();
+        $ionicPlatform.registerBackButtonAction(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }, 100);
+        $ionicPlatform.onHardwareBackButton(function() {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        $rootScope.authData = Auth.$getAuth();
 
         //stateChange event
         //$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -27,66 +36,13 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
     })
 
     .config(function($stateProvider, $urlRouterProvider) {
-
-        // Ionic uses AngularUI Router which uses the concept of states
-        // Learn more here: https://github.com/angular-ui/ui-router
-        // Set up the various states which the app can be in.
-        // Each state's controller can be found in controllers.js
         $stateProvider
-
-            //.state('login', {
-            //    url: '/login',
-            //    templateUrl: 'templates/login.html',
-            //    controller: 'LoginCtrl'
-            //})
-            //
-            //.state('register', {
-            //    url: '/register',
-            //    templateUrl: 'templates/register.html',
-            //    controller: 'RegisterCtrl'
-            //})
-            //
-            //.state('tab', {
-            //    url: '/tab',
-            //    abstract: true,
-            //    templateUrl: 'templates/tabs.html'
-            //})
-            //.state('tab.dash', {
-            //    url: '/dash',
-            //    views: {
-            //        'tab-dash': {
-            //            templateUrl: 'templates/tab-dash.html',
-            //            controller: 'DashCtrl'
-            //        }
-            //    }
-            //})
-            //.state('tab.friends', {
-            //    url: '/friends',
-            //    views: {
-            //        'tab-friends': {
-            //            templateUrl: 'templates/tab-friends.html',
-            //            controller: 'FriendsCtrl'
-            //        }
-            //    }
-            //})
-            //.state('tab.settings', {
-            //    url: '/settings',
-            //    views: {
-            //        'tab-settings': {
-            //            templateUrl: 'templates/tab-settings.html',
-            //            controller: 'SettingsCtrl'
-            //        }
-            //    }
-            //})
-            // setup an abstract state for the tabs directive
+            // Abstract state for the auth tabs
             .state('tab', {
                 url: "/tab",
                 abstract: true,
-                templateUrl: "templates/tabs.html"
+                templateUrl: "templates/auth-tabs.html"
             })
-
-            // Each tab has its own nav history stack:
-
             .state('tab.dash', {
                 url: '/dash',
                 views: {
@@ -96,7 +52,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                     }
                 }
             })
-
             .state('tab.friends', {
                 url: '/friends',
                 views: {
@@ -106,7 +61,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                     }
                 }
             })
-
             .state('tab.friend-detail', {
                 url: '/friends/:friendId',
                 views: {
@@ -116,7 +70,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                     }
                 }
             })
-
             .state('tab.settings', {
                 url: '/settings',
                 views: {
@@ -127,37 +80,40 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 }
             })
 
-            .state('tab.login', {
+            // Abstract state for the anon tabs
+            .state('anon', {
+                url: "/anon",
+                abstract: true,
+                templateUrl: "templates/anon-tabs.html"
+            })
+            .state('anon.login', {
                 url: '/login',
                 views: {
-                    'tab-login': {
+                    'anon-login': {
                         templateUrl: 'templates/tab-login.html',
                         controller: 'LoginCtrl'
                     }
                 }
             })
-
-            .state('tab.register', {
+            .state('anon.register', {
                 url: '/register',
                 views: {
-                    'tab-register': {
+                    'anon-register': {
                         templateUrl: 'templates/tab-register.html',
                         controller: 'RegisterCtrl'
                     }
                 }
-            })
-        ;
+            });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/tab/login');
-        //$urlRouterProvider.otherwise(function ($injector, $location, $firebaseAuth) {
-        //    var $state = $injector.get('$state');
-        //    var ref = new Firebase('https://panderboo.firebaseio.com');
-        //    if ($firebaseAuth(ref).$getAuth()) {
-        //        $state.go('tab.dash');
-        //    } else {
-        //        $state.go('tab.login');
-        //    }
-        //});
+        //$urlRouterProvider.otherwise('/anon/login');
+        $urlRouterProvider.otherwise(function ($injector, $location) {
+            var authData = $injector.get('$rootScope').authData;
+            if (authData) {
+                $location.path('tab/dash');
+            } else {
+                $location.path('anon/login');
+            }
+        });
 
     });
