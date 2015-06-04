@@ -13,36 +13,20 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        $rootScope.is_authenticated = false;
-
-        if($rootScope.is_authenticated) $state.go('tab.dash');
-        else $state.go('tab.login');
+        //$rootScope.authData = Auth.$getAuth();
 
         //stateChange event
         //$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        //    if (!$rootScope.is_authenticated) {
+        //    if ($rootScope.authData === null && toState != 'tab.login') {
+        //        console.log('redirecting');
         //        $state.go('tab.login');
         //        event.preventDefault();
+        //        //$state.reload();
         //    }
         //});
     })
 
-    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-        //$ionicConfigProvider.platform.ios.tabs.style('standard');
-        //$ionicConfigProvider.platform.ios.tabs.position('bottom');
-        //$ionicConfigProvider.platform.android.tabs.style('standard');
-        //$ionicConfigProvider.platform.android.tabs.position('bottom');
-        //
-        //$ionicConfigProvider.platform.ios.navBar.alignTitle('center');
-        //$ionicConfigProvider.platform.android.navBar.alignTitle('center');
-        //
-        //$ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
-        //$ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
-        //
-        //$ionicConfigProvider.platform.ios.views.transition('ios');
-        //$ionicConfigProvider.platform.android.views.transition('ios');
-        //
-        //$ionicConfigProvider.platform.android.rad
+    .config(function($stateProvider, $urlRouterProvider) {
 
         // Ionic uses AngularUI Router which uses the concept of states
         // Learn more here: https://github.com/angular-ui/ui-router
@@ -50,6 +34,50 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         // Each state's controller can be found in controllers.js
         $stateProvider
 
+            //.state('login', {
+            //    url: '/login',
+            //    templateUrl: 'templates/login.html',
+            //    controller: 'LoginCtrl'
+            //})
+            //
+            //.state('register', {
+            //    url: '/register',
+            //    templateUrl: 'templates/register.html',
+            //    controller: 'RegisterCtrl'
+            //})
+            //
+            //.state('tab', {
+            //    url: '/tab',
+            //    abstract: true,
+            //    templateUrl: 'templates/tabs.html'
+            //})
+            //.state('tab.dash', {
+            //    url: '/dash',
+            //    views: {
+            //        'tab-dash': {
+            //            templateUrl: 'templates/tab-dash.html',
+            //            controller: 'DashCtrl'
+            //        }
+            //    }
+            //})
+            //.state('tab.friends', {
+            //    url: '/friends',
+            //    views: {
+            //        'tab-friends': {
+            //            templateUrl: 'templates/tab-friends.html',
+            //            controller: 'FriendsCtrl'
+            //        }
+            //    }
+            //})
+            //.state('tab.settings', {
+            //    url: '/settings',
+            //    views: {
+            //        'tab-settings': {
+            //            templateUrl: 'templates/tab-settings.html',
+            //            controller: 'SettingsCtrl'
+            //        }
+            //    }
+            //})
             // setup an abstract state for the tabs directive
             .state('tab', {
                 url: "/tab",
@@ -76,9 +104,9 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                         templateUrl: 'templates/tab-friends.html',
                         controller: 'FriendsCtrl'
                     }
-                },
-                authRequired: true
+                }
             })
+
             .state('tab.friend-detail', {
                 url: '/friends/:friendId',
                 views: {
@@ -117,9 +145,19 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                         controller: 'RegisterCtrl'
                     }
                 }
-            });
+            })
+        ;
 
         // if none of the above states are matched, use this as the fallback
-        //$urlRouterProvider.otherwise('/tab/dash');
+        $urlRouterProvider.otherwise('/tab/login');
+        //$urlRouterProvider.otherwise(function ($injector, $location, $firebaseAuth) {
+        //    var $state = $injector.get('$state');
+        //    var ref = new Firebase('https://panderboo.firebaseio.com');
+        //    if ($firebaseAuth(ref).$getAuth()) {
+        //        $state.go('tab.dash');
+        //    } else {
+        //        $state.go('tab.login');
+        //    }
+        //});
 
     });

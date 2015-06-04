@@ -1,27 +1,24 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject) {
-        var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
-        $scope.questions = $firebaseObject(ref);
+    .controller('DashCtrl', function ($scope, $firebaseObject, Auth) {
+        $scope.authData = Auth.$getAuth();
+        //var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
+        //$scope.questions = $firebaseObject(ref);
     })
 
-    .controller('FriendsCtrl', function ($scope, Friends) {
-        $scope.friends = Friends.all();
-        $scope.remove = function (friend) {
-            Friends.remove(friend);
-        }
+    .controller('FriendsCtrl', function ($scope, Auth) {
+        $scope.authData = Auth.$getAuth();
     })
 
-    .controller('FriendDetailCtrl', function ($scope, $stateParams, Friends) {
-        $scope.friend = Friends.get($stateParams.friendId);
+    .controller('FriendDetailCtrl', function ($scope, Auth) {
+        $scope.authData = Auth.$getAuth();
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, $rootScope) {
-        var ref = new Firebase('https://panderboo.firebaseio.com');
+    .controller('SettingsCtrl', function ($scope, $state, Auth) {
+        $scope.authData = Auth.$getAuth();
 
         $scope.logout = function () {
-            ref.unauth();
-            $rootScope.is_authenticated = false;
+            Auth.$unauth();
             $state.go('tab.login');
         };
 
@@ -38,39 +35,47 @@ angular.module('panderboo.controllers', ['firebase'])
         //};
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $rootScope) {
+    .controller('LoginCtrl', function ($scope, $state, Auth) {
+        $scope.authData = Auth.$getAuth();
+        if ($scope.authData) {
+            $state.go('tab.dash')
+        }
+
         $scope.data = {};
 
         $scope.login = function () {
-            var ref = new Firebase('https://panderboo.firebaseio.com');
-            ref.authWithPassword({
+            console.log('Login');
+            Auth.$authWithPassword({
                 email: $scope.data.email,
                 password: $scope.data.password
-            }, function (error, authData) {
-                if (error) {
-                    console.log('Login Failed!', error);
-                } else {
-                    $rootScope.is_authenticated = true;
-                    $state.go('tab.dash');
-                }
+            }).then(function (authData) {
+                console.log('then');
+                $state.go('tab.dash');
+            }).catch(function (error) {
+                console.log('Login Failed!', error);
             });
         };
     })
 
-    .controller('RegisterCtrl', function ($scope) {
+    .controller('RegisterCtrl', function ($scope, $state, Auth) {
+        $scope.authData = Auth.$getAuth();
         $scope.data = {};
 
         $scope.register = function () {
-            var ref = new Firebase('https://panderboo.firebaseio.com');
-            ref.createUser({
+            Auth.$createUser({
                 email: $scope.data.email,
                 password: $scope.data.password
-            }, function (error, userData) {
-                if (error) {
-                    console.log('Error creating user:', error);
-                } else {
-                    console.log('Successfully created user account with uid:', userData.uid);
-                }
+            }).then(function (userData) {
+                Auth.$authWithPassword({
+                    email: $scope.data.email,
+                    password: $scope.data.password
+                }).then(function (authData) {
+                    $state.go('tab.dash');
+                }).catch(function (error) {
+                    console.log('Login Failed!', error);
+                });
+            }).catch(function (error) {
+                console.log('Error creating user:', error);
             });
         };
     });

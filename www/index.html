@@ -26,12 +26,13 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
 </head>
 <body ng-app="panderboo">
 <!-- The nav bar that will be updated as we navigate between views. -->
 <ion-nav-bar class="bar-stable">
-    <ion-nav-buttons side="right" ng-if="is_authenticated">
-        <button class="button button-icon icon ion-compose"></button>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-compose" ng-if="authData"></button>
     </ion-nav-buttons>
 </ion-nav-bar>
 <!--
