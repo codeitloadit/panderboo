@@ -13,14 +13,14 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        $ionicPlatform.registerBackButtonAction(function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-        }, 100);
-        $ionicPlatform.onHardwareBackButton(function() {
-            event.preventDefault();
-            event.stopPropagation();
-        });
+        //$ionicPlatform.registerBackButtonAction(function (event) {
+        //    event.preventDefault();
+        //    event.stopPropagation();
+        //}, 100);
+        //$ionicPlatform.onHardwareBackButton(function() {
+        //    event.preventDefault();
+        //    event.stopPropagation();
+        //});
 
         $rootScope.authData = Auth.$getAuth();
 
@@ -107,12 +107,13 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
 
         // if none of the above states are matched, use this as the fallback
         //$urlRouterProvider.otherwise('/anon/login');
-        $urlRouterProvider.otherwise(function ($injector, $location) {
+        $urlRouterProvider.otherwise(function ($injector) {
+            var $state = $injector.get('$state');
             var authData = $injector.get('$rootScope').authData;
             if (authData) {
-                $location.path('tab/dash');
+                $state.go('tab.dash');
             } else {
-                $location.path('anon/login');
+                $state.go('anon.login');
             }
         });
 

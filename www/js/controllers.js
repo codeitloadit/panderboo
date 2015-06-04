@@ -1,6 +1,6 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $location, $firebaseObject) {
+    .controller('DashCtrl', function ($scope, $firebaseObject) {
         var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
         $scope.questions = $firebaseObject(ref);
     })
@@ -11,11 +11,11 @@ angular.module('panderboo.controllers', ['firebase'])
     .controller('FriendDetailCtrl', function ($scope) {
     })
 
-    .controller('SettingsCtrl', function ($scope, $location, $rootScope, Auth) {
+    .controller('SettingsCtrl', function ($scope, $state, $rootScope, Auth) {
         $scope.logout = function () {
             Auth.$unauth();
             $rootScope.authData = null;
-            $location.path('anon/login');
+            $state.go('anon.login');
         };
 
         //$scope.addQuestion = function () {
@@ -31,8 +31,8 @@ angular.module('panderboo.controllers', ['firebase'])
         //};
     })
 
-    .controller('LoginCtrl', function ($scope, $location, $rootScope, Auth) {
-        $scope.data = {};
+    .controller('LoginCtrl', function ($scope, $state, $rootScope, Auth) {
+        $scope.data = {email: 'pwntology@gmail.com', password: '1qaz'};
         $scope.errors = [];
 
         $scope.login = function () {
@@ -42,7 +42,7 @@ angular.module('panderboo.controllers', ['firebase'])
                 password: $scope.data.password
             }).then(function (authData) {
                 $rootScope.authData = authData;
-                $location.path('tab/dash');
+                $state.go('tab.dash');
             }).catch(function (error) {
                 $scope.errors.push(error.toString());
             });
