@@ -35,6 +35,12 @@ angular.module('panderboo.controllers', ['firebase'])
                 .then(function (response) {
                     $scope.raw_friends = response.data.data;
                     $scope.raw_friends.sort(function compare(a,b) {
+                        if (a.last_name == b.last_name) {
+                            if (a.first_name < b.first_name)
+                                return -1;
+                            if (a.first_name > b.first_name)
+                                return 1;
+                        }
                         if (a.last_name < b.last_name)
                             return -1;
                         if (a.last_name > b.last_name)
