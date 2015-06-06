@@ -39,8 +39,6 @@ angular.module('panderboo.controllers', ['firebase'])
                     $scope.friends = $scope.raw_friends;
                 })
                 .finally(function () {
-                    //$scope.$broadcast('scroll.refreshComplete');
-                    //$ionicScrollDelegate.scrollTop();
                     $ionicLoading.hide();
                 });
         }

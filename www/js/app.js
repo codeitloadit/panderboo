@@ -13,10 +13,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        //$rootScope.useCordova = true;
         $rootScope.authData = Auth.$getAuth();
-        //$rootScope.platform = ionic.Platform.platform();
-        //$rootScope.cordovaResult = null;
     })
 
     .config(function($stateProvider, $urlRouterProvider) {
@@ -70,8 +67,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 }
             });
 
-        // if none of the above states are matched, use this as the fallback
-        //$urlRouterProvider.otherwise('/anon/login');
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             var authData = $injector.get('$rootScope').authData;
