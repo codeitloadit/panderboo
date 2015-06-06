@@ -1,4 +1,4 @@
-angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase'])
+angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth'])
 
     .run(function($ionicPlatform, $rootScope, $state, Auth) {
         $ionicPlatform.ready(function() {
@@ -13,35 +13,25 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        //$ionicPlatform.registerBackButtonAction(function (event) {
-        //    event.preventDefault();
-        //    event.stopPropagation();
-        //}, 100);
-        //$ionicPlatform.onHardwareBackButton(function() {
-        //    event.preventDefault();
-        //    event.stopPropagation();
-        //});
-
+        //$rootScope.useCordova = true;
         $rootScope.authData = Auth.$getAuth();
-
-        //stateChange event
-        //$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        //    if ($rootScope.authData === null && toState != 'tab.login') {
-        //        console.log('redirecting');
-        //        $state.go('tab.login');
-        //        event.preventDefault();
-        //        //$state.reload();
-        //    }
-        //});
+        //$rootScope.platform = ionic.Platform.platform();
+        //$rootScope.cordovaResult = null;
     })
 
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
+            .state('login', {
+                url: "/login",
+                templateUrl: "templates/login.html",
+                controller: 'LoginCtrl'
+            })
+
             // Abstract state for the auth tabs
             .state('tab', {
                 url: "/tab",
                 abstract: true,
-                templateUrl: "templates/auth-tabs.html"
+                templateUrl: "templates/tabs.html"
             })
             .state('tab.dash', {
                 url: '/dash',
@@ -78,31 +68,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                         controller: 'SettingsCtrl'
                     }
                 }
-            })
-
-            // Abstract state for the anon tabs
-            .state('anon', {
-                url: "/anon",
-                abstract: true,
-                templateUrl: "templates/anon-tabs.html"
-            })
-            .state('anon.login', {
-                url: '/login',
-                views: {
-                    'anon-login': {
-                        templateUrl: 'templates/tab-login.html',
-                        controller: 'LoginCtrl'
-                    }
-                }
-            })
-            .state('anon.register', {
-                url: '/register',
-                views: {
-                    'anon-register': {
-                        templateUrl: 'templates/tab-register.html',
-                        controller: 'RegisterCtrl'
-                    }
-                }
             });
 
         // if none of the above states are matched, use this as the fallback
@@ -113,7 +78,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             if (authData) {
                 $state.go('tab.dash');
             } else {
-                $state.go('anon.login');
+                $state.go('login');
             }
         });
 

@@ -73,6 +73,26 @@ $dark:                            #111 !default;
   text-align: center;
 }
 
+.friend-item {
+  height: 41px;
+  padding-top: 4px !important;
+}
+.friend-image {
+  float: left;
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+.friend-name-spacer {
+  font-size: 1px;
+}
+.friend-name {
+  //position: relative;
+  //top: 6px;
+  padding-top: 6px;
+}
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 

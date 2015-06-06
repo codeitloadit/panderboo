@@ -58,6 +58,23 @@ $dark:                            #444 !default;
 .center {
   text-align: center; }
 
+.friend-item {
+  height: 41px;
+  padding-top: 4px !important; }
+
+.friend-image {
+  float: left;
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px; }
+
+.friend-name-spacer {
+  font-size: 1px; }
+
+.friend-name {
+  padding-top: 6px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
