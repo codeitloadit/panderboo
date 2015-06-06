@@ -14,6 +14,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         });
 
         $rootScope.authData = Auth.$getAuth();
+        $rootScope.isCordovaApp = !!window.cordova;
     })
 
     .config(function($stateProvider, $urlRouterProvider) {

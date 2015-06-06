@@ -66,15 +66,26 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.login = function () {
             $scope.errors = [];
 
-            $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
-                Auth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
-                    $rootScope.authData = authData;
-                    $state.go('tab.dash');
+            if ($rootScope.isCordovaApp) {
+                $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
+                    Auth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
+                        $rootScope.authData = authData;
+                        $state.go('tab.dash');
+                    }, function (error) {
+                        $scope.errors.push(error.toString());
+                    });
                 }, function (error) {
                     $scope.errors.push(error.toString());
                 });
-            }, function (error) {
-                $scope.errors.push(error.toString());
-            });
+            } else {
+                Auth.$authWithOAuthPopup('facebook', function(error, authData) {
+                    if (error) {
+                        $scope.errors.push(error.toString());
+                    } else {
+                        $rootScope.authData = authData;
+                        $state.go('tab.dash');
+                    }
+                });
+            }
         };
     });
