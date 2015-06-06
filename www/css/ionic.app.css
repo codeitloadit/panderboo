@@ -75,6 +75,9 @@ $dark:                            #444 !default;
 .friend-name {
   padding-top: 6px; }
 
+.facebook-image {
+  border-radius: 12px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

@@ -5,27 +5,32 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.questions = $firebaseObject(ref);
     })
 
-    .controller('FriendsCtrl', function ($scope, $rootScope, $http, Auth, $ionicLoading) {
+    .controller('FriendsCtrl', function ($scope, $rootScope, $http, Auth, $ionicLoading, $window) {
         $ionicLoading.show({
             template: 'Loading...'
         });
+
+        $scope.refresh = function () {
+            $window.location.reload(true)
+        };
 
         $rootScope.authData = Auth.$getAuth();
 
         $scope.raw_friends = [];
         $scope.friends = [];
+        $scope.phrase = '';
 
         $scope.filterByPhrase = function (phrase) {
             $scope.friends = [];
             angular.forEach($scope.raw_friends, function(friend) {
-                if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0) {
+                if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0)) {
                     $scope.friends.push(friend);
                 }
             });
         };
 
         if ($rootScope.authData) {
-            $scope.url = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,first_name,last_name&limit=9999&access_token=' + $rootScope.authData.facebook.accessToken;
+            $scope.url = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,first_name,last_name,middle_name&limit=9999&access_token=' + $rootScope.authData.facebook.accessToken;
             $http.get($scope.url)
                 .then(function (response) {
                     $scope.raw_friends = response.data.data;

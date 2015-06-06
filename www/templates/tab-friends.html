@@ -1,5 +1,6 @@
 <ion-view view-title="Friends">
     <ion-content>
+        <ion-refresher on-refresh="refresh()"></ion-refresher>
         <div class="list">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
@@ -7,7 +8,7 @@
             </label>
             <a class="item friend-item" href="#" collection-repeat="friend in friends">
                 <img class="friend-image" src="{{friend.picture.data.url}}" />
-                <div class="friend-name">{{friend.first_name}} {{friend.last_name}}</div>
+                <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
             </a>
         </div>
     </ion-content>

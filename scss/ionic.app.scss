@@ -88,9 +88,10 @@ $dark:                            #111 !default;
   font-size: 1px;
 }
 .friend-name {
-  //position: relative;
-  //top: 6px;
   padding-top: 6px;
+}
+.facebook-image {
+  border-radius: 12px;
 }
 
 // The path for our ionicons font files, relative to the built CSS in www/css
