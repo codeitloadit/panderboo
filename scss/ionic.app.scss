@@ -18,12 +18,12 @@ $dark:                            #444 !default;
 //$light:                           #000 !default;
 //$stable:                          #000 !default;
 //$positive:                        #000 !default;
-$calm:                            #333 !default;
+//$calm:                            #333 !default;
 //$balanced:                        #000 !default;
 //$energized:                       #000 !default;
 //$assertive:                       #000 !default;
 //$royal:                           #000 !default;
-$dark:                            #111 !default;
+//$dark:                            #111 !default;
 
 .minimal-padding > div{
   padding-bottom: 0px;
@@ -35,18 +35,6 @@ $dark:                            #111 !default;
   left: 17px;
   font-size: 48px;
   border-radius: 4px;
-}
-
-.item-avatar-right i:first-child, .item-avatar-right .item-img {
-  position: absolute;
-  top: 12px;
-  right: 17px;
-  font-size: 48px;
-  border-radius: 4px;
-}
-
-.item-avatar-right > * {
-  text-align: right;
 }
 
 .item-avatar .small-avatar {
@@ -92,6 +80,41 @@ $dark:                            #111 !default;
 }
 .facebook-image {
   border-radius: 12px;
+}
+
+.dash-item {
+  padding: 6px !important;
+}
+.dash-item .time {
+  float: right;
+  font-size: 13px;
+  color: #888;
+  padding-right: 4px;
+  text-align: right;
+}
+.dash-item .status {
+  font-size: 20px;
+  position: relative;
+  top: 3px;
+  right: -2px;
+}
+.dash-item h2{
+  position: relative;
+  top: 5px;
+}
+.dash-item p {
+  position: relative;
+  top: 6px;
+  color: #888 !important;
+}
+.dash-avatar {
+  float: left;
+  position: relative;
+  left: 4px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin-right: 16px;
 }
 
 // The path for our ionicons font files, relative to the built CSS in www/css

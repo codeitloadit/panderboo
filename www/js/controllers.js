@@ -1,8 +1,11 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject) {
-        var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
-        $scope.questions = $firebaseObject(ref);
+    .controller('DashCtrl', function ($scope, $firebaseObject, AuthData) {
+        //var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
+        //$scope.questions = $firebaseObject(ref);
+
+        $scope.facebookPictureUrl = AuthData.facebookPictureUrl();
+
     })
 
     .controller('FriendsCtrl', function ($scope, $http, AuthData, $ionicLoading, $window) {

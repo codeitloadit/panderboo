@@ -2,13 +2,139 @@
     <ion-content>
 
         <div class="list minimal-padding">
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    1:05 pm<br/>
+                    <span class="status"><i class="icon ion-eye-disabled placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What is the last movie that you saw at the cinema?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    11:53 am<br/>
+                    <span class="status"><i class="icon ion-eye placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>Do you sing in the shower?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Sat<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" ng-src="{{facebookPictureUrl}}">
+                <h2>Brian Ellis</h2>
+                <p>Which store would you choose to max out your credit card?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Sat<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" ng-src="{{facebookPictureUrl}}">
+                <h2>Brian Ellis</h2>
+                <p>What do you do most when you are bored?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Sat<br/>
+                    <span class="status"><i class="icon ion-eye placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What do you do for a living?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Fri<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" ng-src="{{facebookPictureUrl}}">
+                <h2>Brian Ellis</h2>
+                <p>Do you love your job?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Wed<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What did you want to be when you grew up?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    Jun 3<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>If you could have any job, what would you want to do/be?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 27<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>Which came first the chicken or the egg?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 25<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>How many keys on your key ring?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 25<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" ng-src="{{facebookPictureUrl}}">
+                <h2>Brian Ellis</h2>
+                <p>Where would you retire to?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 25<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What kind of car do you drive?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 25<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What are your best physical features?</p>
+            </a>
+            <a class="item dash-item" href="#">
+                <div class="time">
+                    May 25<br/>
+                    <span class="status"><i class="icon ion-android-checkmark-circle placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>Anonymous</h2>
+                <p>What are your best characteristics?</p>
+            </a>
 
-            <div class="item item-avatar" ng-repeat="question in questions">
-                <i class="icon {{question.icon}}"></i>
-                <h2><img class="small-avatar" ng-src="{{question.img}}"><strong>{{question.username}}</strong></h2>
-                <h5>{{question.status}} - {{question.date}}</h5>
-                <p>{{question.text}}</p>
-            </div>
+            <!--<div class="item item-avatar" ng-repeat="question in questions">-->
+                <!--<i class="icon {{question.icon}}"></i>-->
+                <!--<h2><img class="small-avatar" ng-src="{{question.img}}"><strong>{{question.username}}</strong></h2>-->
+                <!--<h5>{{question.status}} - {{question.date}}</h5>-->
+                <!--<p>{{question.text}}</p>-->
+            <!--</div>-->
 
             <!--<div class="item item-divider">-->
                 <!--Test Data-->
