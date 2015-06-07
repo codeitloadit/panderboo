@@ -84,17 +84,18 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData) {
+        $scope.facebookPictureUrl = AuthData.facebookPictureUrl();
         $scope.logout = function () {
             AuthData.unauth();
             $state.go('login');
         };
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $rootScope, AuthData, FirebaseAuth, $cordovaOauth) {
+    .controller('LoginCtrl', function ($scope, $state, AuthData, FirebaseAuth, $cordovaOauth) {
         $scope.errors = [];
         $scope.login = function () {
             $scope.errors = [];
-        if ($rootScope.isCordovaApp) {
+        if (!!window.cordova) {
                 $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
                     FirebaseAuth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
                         AuthData.set(authData);

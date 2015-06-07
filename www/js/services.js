@@ -18,6 +18,12 @@ angular.module('panderboo.services', [])
                 }
             };
 
+            factory.facebookPictureUrl = function () {
+                if (authData) {
+                    return authData.facebook.cachedUserProfile.picture.data.url;
+                }
+            };
+
             factory.get = function () {
                 return authData;
             };

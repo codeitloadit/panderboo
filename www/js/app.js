@@ -12,8 +12,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 StatusBar.styleLightContent();
             }
         });
-
-        $rootScope.isCordovaApp = !!window.cordova;
     })
 
     .config(function($stateProvider, $urlRouterProvider) {

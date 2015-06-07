@@ -1,6 +1,6 @@
 <ion-view view-title="Settings">
     <ion-content class="padding center">
-        <img class="facebook-image" src="{{authData.facebook.cachedUserProfile.picture.data.url}}" />
+        <img class="facebook-image" src="{{facebookPictureUrl}}" />
         <div>{{authData.facebook.displayName}}</div>
         <div>{{authData.facebook.email}}</div>
         <button class="button button-block button-positive" ng-click="logout()">Logout</button>
