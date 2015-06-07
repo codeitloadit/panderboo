@@ -1,6 +1,6 @@
 angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth'])
 
-    .run(function($ionicPlatform, $rootScope, $state, Auth) {
+    .run(function($ionicPlatform, $rootScope, $state) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -13,7 +13,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             }
         });
 
-        $rootScope.authData = Auth.$getAuth();
         $rootScope.isCordovaApp = !!window.cordova;
     })
 
@@ -70,8 +69,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
 
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
-            var authData = $injector.get('$rootScope').authData;
-            if (authData) {
+            if ($injector.get('AuthData').get()) {
                 $state.go('tab.dash');
             } else {
                 $state.go('login');

@@ -5,7 +5,7 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.questions = $firebaseObject(ref);
     })
 
-    .controller('FriendsCtrl', function ($scope, $rootScope, $http, Auth, $ionicLoading, $window) {
+    .controller('FriendsCtrl', function ($scope, $http, AuthData, $ionicLoading, $window) {
         $ionicLoading.show({
             template: 'Loading...'
         });
@@ -13,8 +13,6 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.refresh = function () {
             $window.location.reload(true)
         };
-
-        $rootScope.authData = Auth.$getAuth();
 
         $scope.rawPanderbooFriends = [];
         $scope.rawInvitableFriends = [];
@@ -37,9 +35,9 @@ angular.module('panderboo.controllers', ['firebase'])
             });
         };
 
-        if ($rootScope.authData) {
-            $scope.panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){first_name,middle_name,last_name,picture}&limit=9999&access_token=' + $rootScope.authData.facebook.accessToken;
-            $scope.invitableFriendsUrl = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,first_name,last_name,middle_name&limit=9999&access_token=' + $rootScope.authData.facebook.accessToken;
+        if (AuthData.get()) {
+            $scope.panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){first_name,middle_name,last_name,picture}&limit=9999&access_token=' + AuthData.accessToken();
+            $scope.invitableFriendsUrl = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,first_name,last_name,middle_name&limit=9999&access_token=' + AuthData.accessToken();
             $http.get($scope.panderbooFriendsUrl)
                 .then(function (response) {
                     $scope.rawPanderbooFriends = response.data.friends.data;
@@ -85,24 +83,21 @@ angular.module('panderboo.controllers', ['firebase'])
     .controller('FriendDetailCtrl', function ($scope) {
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, $rootScope, Auth) {
+    .controller('SettingsCtrl', function ($scope, $state, AuthData) {
         $scope.logout = function () {
-            Auth.$unauth();
-            $rootScope.authData = null;
+            AuthData.unauth();
             $state.go('login');
         };
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $rootScope, Auth, $cordovaOauth) {
+    .controller('LoginCtrl', function ($scope, $state, $rootScope, AuthData, FirebaseAuth, $cordovaOauth) {
         $scope.errors = [];
-
         $scope.login = function () {
             $scope.errors = [];
-
-            if ($rootScope.isCordovaApp) {
+        if ($rootScope.isCordovaApp) {
                 $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
-                    Auth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
-                        $rootScope.authData = authData;
+                    FirebaseAuth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
+                        AuthData.set(authData);
                         $state.go('tab.dash');
                     }, function (error) {
                         $scope.errors.push(error.toString());
@@ -111,11 +106,11 @@ angular.module('panderboo.controllers', ['firebase'])
                     $scope.errors.push(error.toString());
                 });
             } else {
-                Auth.$authWithOAuthPopup('facebook', function (error, authData) {
+                FirebaseAuth.$authWithOAuthPopup('facebook', function (error, authData) {
                     if (error) {
                         $scope.errors.push(error.toString());
                     } else {
-                        $rootScope.authData = authData;
+                        AuthData.set(authData);
                         $state.go('tab.dash');
                     }
                 });
