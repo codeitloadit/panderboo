@@ -6,8 +6,14 @@
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search" ng-model="phrase" ng-change="filterByPhrase(phrase)">
             </label>
-            <a class="item friend-item" href="#" collection-repeat="friend in friends">
-                <img class="friend-image" src="{{friend.picture.data.url}}" />
+            <div class="item item-divider">Panderboo Friends</div>
+            <a class="item friend-item" href="#" ng-repeat="friend in panderbooFriends">
+                <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
+                <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
+            </a>
+            <div class="item item-divider">Facebook Friends</div>
+            <a class="item friend-item" href="#" ng-repeat="friend in invitableFriends">
+                <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
             </a>
         </div>
