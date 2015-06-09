@@ -1,8 +1,12 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, AuthData) {
+    .controller('DashCtrl', function ($scope, $firebaseObject, AuthData, $window) {
         //var ref = new Firebase('https://panderboo.firebaseio.com/questions/');
         //$scope.questions = $firebaseObject(ref);
+
+        $scope.refresh = function () {
+            $window.location.reload(true)
+        };
 
         $scope.facebookPictureUrl = AuthData.facebookPictureUrl();
 
@@ -88,6 +92,8 @@ angular.module('panderboo.controllers', ['firebase'])
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData) {
         $scope.facebookPictureUrl = AuthData.facebookPictureUrl();
+        $scope.displayName = AuthData.displayName();
+        $scope.email = AuthData.email();
         $scope.logout = function () {
             AuthData.unauth();
             $state.go('login');
@@ -110,13 +116,11 @@ angular.module('panderboo.controllers', ['firebase'])
                     $scope.errors.push(error.toString());
                 });
             } else {
-                FirebaseAuth.$authWithOAuthPopup('facebook', function (error, authData) {
-                    if (error) {
-                        $scope.errors.push(error.toString());
-                    } else {
-                        AuthData.set(authData);
-                        $state.go('tab.dash');
-                    }
+                FirebaseAuth.$authWithOAuthPopup('facebook').then(function(authData) {
+                    AuthData.set(authData);
+                    $state.go('tab.dash');
+                }, function (error) {
+                    $scope.errors.push(error.toString());
                 });
             }
         };

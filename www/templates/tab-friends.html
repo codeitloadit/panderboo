@@ -6,16 +6,24 @@
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search" ng-model="phrase" ng-change="filterByPhrase(phrase)">
             </label>
-            <div class="item item-divider">Panderboo Friends</div>
-            <a class="item friend-item" href="#" ng-repeat="friend in panderbooFriends">
+            <div class="item item-divider">
+                Panderboo Friends
+                <span class="item-note">{{panderbooFriends.length}}</span>
+            </div>
+            <div class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends">
                 <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
-            </a>
-            <div class="item item-divider">Facebook Friends</div>
-            <a class="item friend-item" href="#" ng-repeat="friend in invitableFriends">
+                <i class="icon ion-ios-arrow-right"></i>
+            </div>
+            <div class="item item-divider">
+                Facebook Friends
+                <span class="item-note">{{invitableFriends.length}}</span>
+            </div>
+            <div class="item friend-item item-icon-right" ng-repeat="friend in invitableFriends">
                 <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
-            </a>
+                <i class="icon ion-ios-personadd-outline"></i>
+            </div>
         </div>
     </ion-content>
 </ion-view>

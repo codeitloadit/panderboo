@@ -24,6 +24,18 @@ angular.module('panderboo.services', [])
                 }
             };
 
+            factory.displayName = function () {
+                if (authData) {
+                    return authData.facebook.displayName;
+                }
+            };
+
+            factory.email = function () {
+                if (authData) {
+                    return authData.facebook.email;
+                }
+            };
+
             factory.get = function () {
                 return authData;
             };
