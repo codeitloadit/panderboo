@@ -102,6 +102,18 @@ $dark:                            #444 !default;
   border-radius: 25px;
   margin-right: 16px; }
 
+#friend-facebook-image {
+  float: left;
+  border-radius: 2px; }
+
+#question-input {
+  height: 50px;
+  border-radius: 2px;
+  margin-left: 60px !important; }
+
+.friend-history-list {
+  border-radius: 2px !important; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

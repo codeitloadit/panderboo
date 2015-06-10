@@ -47,7 +47,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 }
             })
             .state('tab.friend-detail', {
-                url: '/friends/:friendId',
+                url: '/friends/:friendObj',
                 views: {
                     'tab-friends': {
                         templateUrl: 'templates/friend-detail.html',

@@ -1,14 +1,42 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
-<ion-view view-title="{{friend.name}}">
-  <ion-content class="padding">
-    <img ng-src="{{friend.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{friend.lastText}}
-    </p>
-  </ion-content>
+<ion-view view-title="{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}">
+    <ion-content class="padding">
+        <img id="friend-facebook-image" ng-src="{{friend.picture.data.url}}">
+        <label id="question-input" class="item item-input">
+            <textarea placeholder="Ask {{friend.first_name}} a question..."></textarea>
+        </label>
+        <button class="button button-block button-positive" ng-click="logout()">Submit Question</button>
+        <div class="friend-history-list list list-inset">
+            <ion-item class="item item-divider">
+                Recent Questions
+                <span class="item-note">4</span>
+            </ion-item>
+            <ion-item>
+                What is your annual salary?
+            </ion-item>
+            <ion-item>
+                What do you do for a living?
+            </ion-item>
+            <ion-item>
+                Do you love your job?
+            </ion-item>
+            <ion-item>
+                What did you want to be when you grew up?
+            </ion-item>
+        </div>
+        <div class="friend-history-list list list-inset">
+            <ion-item class="item item-divider">
+                Recent Polls
+                <span class="item-note">3</span>
+            </ion-item>
+            <ion-item>
+                If you could have any job, what would you want to do/be?
+            </ion-item>
+            <ion-item>
+                Which came first the chicken or the egg?
+            </ion-item>
+            <ion-item>
+                How many keys on your key ring?
+            </ion-item>
+        </div>
+    </ion-content>
 </ion-view>

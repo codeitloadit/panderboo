@@ -10,7 +10,7 @@
                 Active Friends
                 <span class="item-note">{{panderbooFriends.length}}</span>
             </ion-item>
-            <ion-item class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends" ng-click="loadFriend(friend.id)">
+            <ion-item class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends" ng-click="loadFriend(friend)">
                 <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
                 <i class="icon ion-ios-arrow-right"></i>

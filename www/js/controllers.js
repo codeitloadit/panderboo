@@ -12,7 +12,7 @@ angular.module('panderboo.controllers', ['firebase'])
 
     })
 
-    .controller('FriendsCtrl', function ($scope, $ionicLoading, PanderbooFriends, InvitableFriends) {
+    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, PanderbooFriends, InvitableFriends) {
         $scope.refresh = function () {
             $ionicLoading.show({
                 template: 'Loading...'
@@ -44,13 +44,13 @@ angular.module('panderboo.controllers', ['firebase'])
             });
         };
 
-        $scope.loadFriend = function (friendId) {
-            console.log(friendId);
+        $scope.loadFriend = function (friend) {
+            $state.go('tab.friend-detail', {friendObj: angular.toJson(friend)});
         }
     })
 
-    .controller('FriendDetailCtrl', function ($scope, AuthData) {
-
+    .controller('FriendDetailCtrl', function ($scope, $stateParams) {
+        $scope.friend = angular.fromJson($stateParams.friendObj);
     })
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData) {
