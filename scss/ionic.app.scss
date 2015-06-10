@@ -25,10 +25,7 @@ $dark:                            #444 !default;
 //$royal:                           #000 !default;
 //$dark:                            #111 !default;
 
-.minimal-padding > div{
-  padding-bottom: 0px;
-  padding-top: 6px;
-}
+
 .item-avatar i:first-child, .item-avatar .item-img {
   position: absolute;
   top: 12px;
@@ -64,6 +61,10 @@ $dark:                            #444 !default;
 .friend-item {
   height: 41px;
   padding-top: 4px !important;
+}
+.friend-item > a {
+  height: 41px;
+  padding-top: 0px !important;
 }
 .friend-image {
   float: left;

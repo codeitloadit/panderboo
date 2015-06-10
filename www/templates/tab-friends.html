@@ -1,29 +1,29 @@
 <ion-view view-title="Friends">
     <ion-content>
         <ion-refresher on-refresh="refresh()"></ion-refresher>
-        <div class="list">
+        <ion-list>
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Search" ng-model="phrase" ng-change="filterByPhrase(phrase)">
+                <input type="text" placeholder="Search" ng-model="$parent.phrase" ng-change="filterByPhrase(phrase)">
             </label>
-            <div class="item item-divider">
-                Panderboo Friends
+            <ion-item class="item item-divider">
+                Active Friends
                 <span class="item-note">{{panderbooFriends.length}}</span>
-            </div>
-            <div class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends">
+            </ion-item>
+            <ion-item class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends" ng-click="loadFriend(friend.id)">
                 <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
                 <i class="icon ion-ios-arrow-right"></i>
-            </div>
-            <div class="item item-divider">
-                Facebook Friends
+            </ion-item>
+            <ion-item class="item item-divider">
+                Inactive Friends
                 <span class="item-note">{{invitableFriends.length}}</span>
-            </div>
-            <div class="item friend-item item-icon-right" ng-repeat="friend in invitableFriends">
+            </ion-item>
+            <ion-item class="item friend-item item-icon-right" ng-repeat="friend in invitableFriends">
                 <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
                 <i class="icon ion-ios-personadd-outline"></i>
-            </div>
-        </div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
