@@ -2,9 +2,9 @@
     <ion-content class="padding">
         <img id="friend-facebook-image" ng-src="{{friend.picture.data.url}}">
         <label id="question-input" class="item item-input">
-            <textarea placeholder="Ask {{friend.first_name}} a question..."></textarea>
+            <textarea placeholder="Ask {{friend.first_name}} a question..." ng-model="$parent.text"></textarea>
         </label>
-        <button class="button button-block button-positive" ng-click="logout()">Submit Question</button>
+        <button class="button button-block button-positive" ng-click="submitQuestion(text)">Submit Question</button>
         <div class="friend-history-list list list-inset">
             <ion-item class="item item-divider">
                 Recent Questions

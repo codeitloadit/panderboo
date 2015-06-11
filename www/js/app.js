@@ -67,7 +67,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
 
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
-            if ($injector.get('AuthData').get()) {
+            if ($injector.get('AuthData').authData) {
                 $state.go('tab.dash');
             } else {
                 $state.go('login');

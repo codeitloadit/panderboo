@@ -1,7 +1,16 @@
 <ion-view view-title="Dashboard">
     <ion-content>
-        <ion-refresher on-refresh="refresh()"></ion-refresher>
         <ion-list>
+            <ion-item class="item dash-item" ng-repeat="question in questions">
+                <div class="time">
+                    {{question.timestamp}}<br/>
+                    <span class="status"><i class="icon ion-eye-disabled placeholder-icon status"></i></span>
+                </div>
+                <img class="dash-avatar" src="img/anon.png">
+                <h2>{{question.toId}}</h2>
+                <p>{{question.question}}</p>
+            </ion-item>
+            <ion-item class="item item-divider">Mockup Data</ion-item>
             <ion-item class="item dash-item">
                 <div class="time">
                     1:05 pm<br/>
