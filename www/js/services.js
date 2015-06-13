@@ -1,12 +1,11 @@
 angular.module('panderboo.services', [])
 
     .factory('FirebaseAuth', function ($firebaseAuth) {
-        var ref = new Firebase('https://panderboo.firebaseio.com');
-        return $firebaseAuth(ref);
+        return $firebaseAuth(new Firebase('https://panderboo.firebaseio.com'));
     })
 
     .factory('AuthData', function (FirebaseAuth) {
-        return authData = FirebaseAuth.$getAuth();
+        return FirebaseAuth.$getAuth();
     })
 
     .factory('PanderbooFriends', function (AuthData, $http) {
