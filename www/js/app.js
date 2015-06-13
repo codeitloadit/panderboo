@@ -1,6 +1,6 @@
 angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth'])
 
-    .run(function($ionicPlatform) {
+    .run(function($ionicPlatform, $rootScope, AuthData, $state, Friends, $ionicLoading) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -12,11 +12,24 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 StatusBar.styleLightContent();
             }
         });
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            if (!AuthData && toState.name != 'login') {
+                $state.go('login');
+                event.preventDefault();
+            }
+            //if (!Friends.fetched && toState.name == 'tab.friends') {
+            //    event.preventDefault();
+            //    $ionicLoading.show();
+            //    Friends.fetchFriends(function (friends) {
+            //        $state.go('tab.friends', {}, {reload: true});
+            //    });
+            //}
+        });
     })
 
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-        // Enable native scrolls for Android platform only,
-        // as you see, we're disabling jsScrolling to achieve this.
+        // Enable native scrolls for Android platform only, as you see, we're disabling jsScrolling to achieve this.
         if (ionic.Platform.isAndroid()) {
             $ionicConfigProvider.scrolling.jsScrolling(false);
         }
@@ -28,7 +41,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 controller: 'LoginCtrl'
             })
 
-            // Abstract state for the auth tabs
             .state('tab', {
                 url: "/tab",
                 abstract: true,

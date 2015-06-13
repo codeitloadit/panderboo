@@ -2,9 +2,7 @@ angular.module('panderboo.controllers', ['firebase'])
 
     .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, $firebaseArray) {
         var ref = new Firebase('https://panderboo.firebaseio.com/questions');
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+        $ionicLoading.show();
         $scope.allQuestions = $firebaseArray(ref);
         $scope.questions = [];
         $scope.allQuestions.$loaded(function () {
@@ -18,19 +16,23 @@ angular.module('panderboo.controllers', ['firebase'])
         });
     })
 
-    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, PanderbooFriends, InvitableFriends) {
+    .controller('FriendsCtrl', function ($scope, $state, $stateParams, $ionicLoading, Friends) {
+        $scope.$on('$ionicView.enter', function(){
+            if (!Friends.fetched) {
+                $scope.refresh();
+            }
+        });
+
         $scope.refresh = function () {
-            $ionicLoading.show({
-                template: 'Loading...'
-            });
+            $ionicLoading.show();
+            $scope.panderbooFriends = [];
+            $scope.invitableFriends = [];
             $scope.phrase = '';
-            PanderbooFriends.fetchFriends(function (friends) {
-                $scope.panderbooFriends = friends;
-                InvitableFriends.fetchFriends(function (friends) {
-                    $scope.invitableFriends = friends;
-                    $scope.$broadcast('scroll.refreshComplete');
-                    $ionicLoading.hide();
-                });
+            Friends.fetchFriends(function (friends) {
+                $scope.panderbooFriends = friends.panderbooFriends;
+                $scope.invitableFriends = friends.invitableFriends;
+                $scope.$broadcast('scroll.refreshComplete');
+                $ionicLoading.hide();
             });
         };
         $scope.refresh();
@@ -38,12 +40,12 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.filterByPhrase = function (phrase) {
             $scope.panderbooFriends = [];
             $scope.invitableFriends = [];
-            angular.forEach(PanderbooFriends.friends, function (friend) {
+            angular.forEach(Friends.panderbooFriends, function (friend) {
                 if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0)) {
                     $scope.panderbooFriends.push(friend);
                 }
             });
-            angular.forEach(InvitableFriends.friends, function (friend) {
+            angular.forEach(Friends.invitableFriends, function (friend) {
                 if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0)) {
                     $scope.invitableFriends.push(friend);
                 }
@@ -72,11 +74,12 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth) {
+    .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth, Friends) {
         $scope.authData = AuthData;
         $scope.logout = function () {
             FirebaseAuth.$unauth();
             AuthData = undefined;
+            Friends.clear();
             $state.go('login');
         };
     })
