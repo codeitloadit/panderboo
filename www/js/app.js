@@ -1,6 +1,6 @@
 angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth'])
 
-    .run(function($ionicPlatform, $rootScope, $state) {
+    .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -11,16 +11,16 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
-
-            // Enable native scrolls for Android platform only,
-            // as you see, we're disabling jsScrolling to achieve this.
-            if (ionic.Platform.isAndroid()) {
-                $ionicConfigProvider.scrolling.jsScrolling(false);
-            }
         });
     })
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+        // Enable native scrolls for Android platform only,
+        // as you see, we're disabling jsScrolling to achieve this.
+        if (ionic.Platform.isAndroid()) {
+            $ionicConfigProvider.scrolling.jsScrolling(false);
+        }
+
         $stateProvider
             .state('login', {
                 url: "/login",
@@ -73,7 +73,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
 
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
-            if ($injector.get('AuthData').authData) {
+            if ($injector.get('AuthData')) {
                 $state.go('tab.dash');
             } else {
                 $state.go('login');

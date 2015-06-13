@@ -9,7 +9,7 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.questions = [];
         $scope.allQuestions.$loaded(function () {
             angular.forEach($scope.allQuestions.reverse(), function (question) {
-                if (question.fromId == AuthData.authData.facebook.id || question.toId == AuthData.authData.facebook.id) {
+                if (question.fromId == AuthData.facebook.id || question.toId == AuthData.facebook.id) {
                     $scope.questions.push(question);
                 }
             });
@@ -62,7 +62,7 @@ angular.module('panderboo.controllers', ['firebase'])
             if (text) {
                 Questions.$add({
                     question: text,
-                    fromId: AuthData.authData.facebook.id,
+                    fromId: AuthData.facebook.id,
                     toId: $scope.friend.id,
                     timestamp: Date.now(),
                     status: 'unread'
@@ -73,10 +73,10 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth) {
-        $scope.authData = AuthData.authData;
+        $scope.authData = AuthData;
         $scope.logout = function () {
             FirebaseAuth.$unauth();
-            AuthData.authData = undefined;
+            AuthData = undefined;
             $state.go('login');
         };
     })
@@ -88,7 +88,7 @@ angular.module('panderboo.controllers', ['firebase'])
             if (!!window.cordova) {
                 $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
                     FirebaseAuth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
-                        AuthData.authData = authData;
+                        AuthData = authData;
                         $state.go('tab.dash');
                     }, function (error) {
                         $scope.errors.push(error.toString());
@@ -98,7 +98,7 @@ angular.module('panderboo.controllers', ['firebase'])
                 });
             } else {
                 FirebaseAuth.$authWithOAuthPopup('facebook').then(function (authData) {
-                    AuthData.authData = authData;
+                    AuthData = authData;
                     $state.go('tab.dash');
                 }, function (error) {
                     $scope.errors.push(error.toString());
