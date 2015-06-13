@@ -11,6 +11,12 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
+
+            // Enable native scrolls for Android platform only,
+            // as you see, we're disabling jsScrolling to achieve this.
+            if (ionic.Platform.isAndroid()) {
+                $ionicConfigProvider.scrolling.jsScrolling(false);
+            }
         });
     })
 
