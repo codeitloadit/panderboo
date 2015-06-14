@@ -14,7 +14,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         });
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            if (!AuthData && toState.name != 'login') {
+            if (!AuthData.authData && toState.name != 'login') {
                 $state.go('login');
                 event.preventDefault();
             }

@@ -80,7 +80,7 @@ $dark:                            #444 !default;
   padding-top: 6px;
 }
 .facebook-image {
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 .dash-item {
@@ -129,6 +129,14 @@ $dark:                            #444 !default;
 }
 .friend-history-list {
   border-radius: 2px !important;
+}
+
+// Header image
+.small-facebook-image {
+  float: right;
+  width: 34px;
+  height: 34px;
+  border-radius: 3px;
 }
 
 // The path for our ionicons font files, relative to the built CSS in www/css
