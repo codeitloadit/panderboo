@@ -2,15 +2,14 @@ angular.module('panderboo.controllers', ['firebase'])
 
     .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
         $scope.$on('$ionicView.enter', function () {
-            // TODO: Handle situations when the user doesn't have any store questions.
-            if (!$scope.authData || angular.toJson($scope.allQuestions) != angular.toJson(Questions.questions)) {
+            if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
             }
         });
         $scope.refresh = function () {
             $ionicLoading.show();
+            $scope.authData = AuthData.authData;
             Questions.fetchQuestions(function (questions) {
-                $scope.authData = AuthData.authData;
                 $scope.allQuestions = questions;
                 $scope.questions = [];
                 $scope.allQuestions.$loaded(function () {
@@ -26,15 +25,15 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, Friends) {
+    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
         $scope.$on('$ionicView.enter', function () {
-            // TODO: Handle situations when the user doesn't have any invitable friends.
-            if (!$scope.invitableFriends || angular.toJson($scope.invitableFriends) != angular.toJson(Friends.invitableFriends)) {
+            if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
             }
         });
         $scope.refresh = function () {
             $ionicLoading.show();
+            $scope.authData = AuthData.authData;
             $scope.panderbooFriends = [];
             $scope.invitableFriends = [];
             $scope.phrase = '';
@@ -45,7 +44,6 @@ angular.module('panderboo.controllers', ['firebase'])
                 $ionicLoading.hide();
             });
         };
-
         $scope.filterByPhrase = function (phrase) {
             $scope.panderbooFriends = [];
             $scope.invitableFriends = [];
