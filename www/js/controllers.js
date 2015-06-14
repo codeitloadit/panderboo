@@ -1,26 +1,38 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, $firebaseArray) {
-        var ref = new Firebase('https://panderboo.firebaseio.com/questions');
-        $ionicLoading.show();
-        $scope.allQuestions = $firebaseArray(ref);
-        $scope.questions = [];
-        $scope.allQuestions.$loaded(function () {
-            angular.forEach($scope.allQuestions.reverse(), function (question) {
-                if (question.fromId == AuthData.facebook.id || question.toId == AuthData.facebook.id) {
-                    $scope.questions.push(question);
-                }
-            });
-            $scope.$broadcast('scroll.refreshComplete');
-            $ionicLoading.hide();
+    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
+        $scope.$on('$ionicView.enter', function () {
+            // TODO: Handle situations when the user doesn't have any store questions.
+            if (!$scope.authData || angular.toJson($scope.allQuestions) != angular.toJson(Questions.questions)) {
+                $scope.refresh();
+            }
         });
+        $scope.refresh = function () {
+            $ionicLoading.show();
+            Questions.fetchQuestions(function (questions) {
+                $scope.authData = AuthData.authData;
+                $scope.allQuestions = questions;
+                $scope.questions = [];
+                $scope.allQuestions.$loaded(function () {
+                    angular.forEach($scope.allQuestions.reverse(), function (question) {
+                        if (question.fromId == $scope.authData.facebook.id) {
+                            $scope.questions.push(question);
+                        }
+                    });
+                    $scope.$broadcast('scroll.refreshComplete');
+                    $ionicLoading.hide();
+                });
+            });
+        };
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, Friends) {
-        $scope.reload = function () {
-            window.location.reload();
-        };
-
+        $scope.$on('$ionicView.enter', function () {
+            // TODO: Handle situations when the user doesn't have any invitable friends.
+            if (!$scope.invitableFriends || angular.toJson($scope.invitableFriends) != angular.toJson(Friends.invitableFriends)) {
+                $scope.refresh();
+            }
+        });
         $scope.refresh = function () {
             $ionicLoading.show();
             $scope.panderbooFriends = [];
@@ -33,7 +45,6 @@ angular.module('panderboo.controllers', ['firebase'])
                 $ionicLoading.hide();
             });
         };
-        $scope.refresh();
 
         $scope.filterByPhrase = function (phrase) {
             $scope.panderbooFriends = [];
@@ -60,9 +71,9 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.text = '';
         $scope.submitQuestion = function (text) {
             if (text) {
-                Questions.$add({
+                Questions.qustions.$add({
                     question: text,
-                    fromId: AuthData.facebook.id,
+                    fromId: AuthData.authData.facebook.id,
                     toId: $scope.friend.id,
                     timestamp: Date.now(),
                     status: 'unread'
@@ -72,11 +83,12 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth, Friends) {
+    .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth, Friends, Questions) {
         $scope.authData = AuthData;
         $scope.logout = function () {
             FirebaseAuth.$unauth();
-            AuthData = undefined;
+            AuthData.authData = null;
+            Questions.questions = [];
             Friends.clear();
             $state.go('login');
         };
@@ -89,7 +101,7 @@ angular.module('panderboo.controllers', ['firebase'])
             if (!!window.cordova) {
                 $cordovaOauth.facebook('867761916650124', ['user_friends']).then(function (result) {
                     FirebaseAuth.$authWithOAuthToken('facebook', result.access_token).then(function (authData) {
-                        AuthData = authData;
+                        AuthData.authData = authData;
                         $state.go('tab.dash');
                     }, function (error) {
                         $scope.errors.push(error.toString());
@@ -99,7 +111,7 @@ angular.module('panderboo.controllers', ['firebase'])
                 });
             } else {
                 FirebaseAuth.$authWithOAuthPopup('facebook').then(function (authData) {
-                    AuthData = authData;
+                    AuthData.authData = authData;
                     $state.go('tab.dash');
                 }, function (error) {
                     $scope.errors.push(error.toString());

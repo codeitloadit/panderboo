@@ -5,13 +5,15 @@ angular.module('panderboo.services', [])
     })
 
     .factory('AuthData', function (FirebaseAuth) {
-        return FirebaseAuth.$getAuth();
+        var factory = {};
+        factory.authData = FirebaseAuth.$getAuth();
+        return factory;
     })
 
     .factory('Friends', function (AuthData, $http) {
         var factory = {fetched: false};
         factory.fetchFriends = function (callback) {
-            var panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){name,first_name,middle_name,last_name,picture}&limit=9999&access_token=' + AuthData.facebook.accessToken;
+            var panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){name,first_name,middle_name,last_name,picture}&limit=9999&access_token=' + AuthData.authData.facebook.accessToken;
             $http.get(panderbooFriendsUrl)
                 .then(function (response) {
                     factory.panderbooFriends = response.data.friends.data;
@@ -28,7 +30,7 @@ angular.module('panderboo.services', [])
                             return 1;
                         return 0;
                     });
-                    var invitableFriendsUrl = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,name,first_name,last_name,middle_name&limit=9999&access_token=' + AuthData.facebook.accessToken;
+                    var invitableFriendsUrl = 'https://graph.facebook.com/v2.3/me/invitable_friends?fields=id,picture,name,first_name,last_name,middle_name&limit=9999&access_token=' + AuthData.authData.facebook.accessToken;
                     $http.get(invitableFriendsUrl)
                         .then(function (response) {
                             factory.invitableFriends = response.data.data;
@@ -59,6 +61,11 @@ angular.module('panderboo.services', [])
     })
 
     .factory('Questions', function ($firebaseArray) {
-        var ref = new Firebase('https://panderboo.firebaseio.com/questions');
-        return $firebaseArray(ref);
+        var factory = {};
+        factory.fetchQuestions = function (callback) {
+            var ref = new Firebase('https://panderboo.firebaseio.com/questions');
+            factory.questions = $firebaseArray(ref);
+            return callback(factory.questions);
+        };
+        return factory;
     });
