@@ -18,13 +18,6 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 $state.go('login');
                 event.preventDefault();
             }
-            //if (!Friends.fetched && toState.name == 'tab.friends') {
-            //    event.preventDefault();
-            //    $ionicLoading.show();
-            //    Friends.fetchFriends(function (friends) {
-            //        $state.go('tab.friends', {}, {reload: true});
-            //    });
-            //}
         });
     })
 
@@ -91,5 +84,4 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 $state.go('login');
             }
         });
-
     });

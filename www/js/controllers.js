@@ -16,12 +16,10 @@ angular.module('panderboo.controllers', ['firebase'])
         });
     })
 
-    .controller('FriendsCtrl', function ($scope, $state, $stateParams, $ionicLoading, Friends) {
-        $scope.$on('$ionicView.enter', function(){
-            if (!Friends.fetched) {
-                $scope.refresh();
-            }
-        });
+    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, Friends) {
+        $scope.reload = function () {
+            window.location.reload();
+        };
 
         $scope.refresh = function () {
             $ionicLoading.show();

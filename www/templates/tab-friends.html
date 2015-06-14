@@ -6,7 +6,7 @@
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search" ng-model="$parent.phrase" ng-change="filterByPhrase(phrase)">
             </label>
-            <ion-item class="item item-divider">
+            <ion-item class="item item-divider" ng-click="reload()">
                 Active Friends
                 <span class="item-note">{{panderbooFriends.length}}</span>
             </ion-item>
