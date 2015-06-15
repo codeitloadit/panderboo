@@ -1,6 +1,6 @@
 <ion-view view-title="{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}">
     <ion-content class="padding">
-        <img id="friend-facebook-image" ng-src="{{friend.picture.data.url}}">
+        <img id="friend-facebook-image" ng-src="https://graph.facebook.com/v2.3/{{friend.id}}/picture?width=50">
         <label id="question-input" class="item item-input">
             <textarea placeholder="Ask {{friend.first_name}} a question..." ng-model="$parent.text"></textarea>
         </label>

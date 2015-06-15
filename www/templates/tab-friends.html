@@ -11,7 +11,7 @@
                 <span class="item-note">{{panderbooFriends.length}}</span>
             </ion-item>
             <ion-item class="item friend-item item-icon-right" ng-repeat="friend in panderbooFriends" ng-click="loadFriend(friend)">
-                <img class="friend-image" ng-src="{{friend.picture.data.url}}" />
+                <img class="friend-image" ng-src="https://graph.facebook.com/v2.3/{{friend.id}}/picture?width=32" />
                 <div class="friend-name">{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}</div>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>

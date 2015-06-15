@@ -13,7 +13,7 @@ angular.module('panderboo.services', [])
     .factory('Friends', function (AuthData, $http) {
         var factory = {fetched: false};
         factory.fetchFriends = function (callback) {
-            var panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){name,first_name,middle_name,last_name,picture}&limit=9999&access_token=' + AuthData.authData.facebook.accessToken;
+            var panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){name,first_name,middle_name,last_name}&limit=9999&access_token=' + AuthData.authData.facebook.accessToken;
             $http.get(panderbooFriendsUrl)
                 .then(function (response) {
                     factory.panderbooFriends = response.data.friends.data;
@@ -61,9 +61,9 @@ angular.module('panderboo.services', [])
     })
 
     .factory('Questions', function ($firebaseArray) {
+        var ref = new Firebase('https://panderboo.firebaseio.com/questions');
         var factory = {};
         factory.fetchQuestions = function (callback) {
-            var ref = new Firebase('https://panderboo.firebaseio.com/questions');
             factory.questions = $firebaseArray(ref);
             return callback(factory.questions);
         };
