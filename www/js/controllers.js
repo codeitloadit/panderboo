@@ -1,7 +1,7 @@
 angular.module('panderboo.controllers', ['firebase'])
 
     .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
-        $scope.$on('$ionicView.enter', function () {
+        $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
             }
@@ -26,7 +26,7 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
-        $scope.$on('$ionicView.enter', function () {
+        $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
             }
