@@ -34,31 +34,13 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.refresh = function () {
             $ionicLoading.show();
             $scope.authData = AuthData.authData;
-            $scope.panderbooFriends = [];
-            $scope.invitableFriends = [];
             $scope.phrase = '';
             Friends.fetchFriends(function (friends) {
-                $scope.panderbooFriends = friends.panderbooFriends;
-                $scope.invitableFriends = friends.invitableFriends;
+                $scope.friends = friends;
                 $scope.$broadcast('scroll.refreshComplete');
                 $ionicLoading.hide();
             });
         };
-        $scope.filterByPhrase = function (phrase) {
-            $scope.panderbooFriends = [];
-            $scope.invitableFriends = [];
-            angular.forEach(Friends.panderbooFriends, function (friend) {
-                if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0)) {
-                    $scope.panderbooFriends.push(friend);
-                }
-            });
-            angular.forEach(Friends.invitableFriends, function (friend) {
-                if (friend.last_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(phrase.toLowerCase()) >= 0)) {
-                    $scope.invitableFriends.push(friend);
-                }
-            });
-        };
-
         $scope.loadFriend = function (friend) {
             $state.go('tab.friend-detail', {friendObj: angular.toJson(friend)});
         }
