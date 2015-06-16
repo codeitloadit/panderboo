@@ -1,6 +1,6 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, Friends) {
+    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
         $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
@@ -12,17 +12,20 @@ angular.module('panderboo.controllers', ['firebase'])
             $scope.questions = Questions;
             $scope.questions.$loaded(function () {
                 $ionicLoading.hide();
-                Friends.fetchFriends(function(friends) {
-
-                });
             });
         };
     })
 
-    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, Friends) {
-        $scope.friends = Friends;
+    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
+        $scope.$on('$ionicView.beforeEnter', function () {
+            if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
+                $scope.refresh();
+            }
+        });
         $scope.refresh = function () {
             $ionicLoading.show();
+            $scope.authData = AuthData.authData;
+            $scope.phrase = '';
             Friends.fetchFriends(function (friends) {
                 $scope.friends = friends;
                 $scope.$broadcast('scroll.refreshComplete');

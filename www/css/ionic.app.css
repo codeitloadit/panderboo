@@ -120,6 +120,12 @@ $dark:                            #444 !default;
   height: 34px;
   border-radius: 3px; }
 
+i.icon.read {
+  color: #444; }
+
+i.icon.replied {
+  color: #000; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

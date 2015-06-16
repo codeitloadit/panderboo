@@ -139,6 +139,16 @@ $dark:                            #444 !default;
   border-radius: 3px;
 }
 
+//i.icon.unread {
+//  color: red;
+//}
+i.icon.read {
+  color: #444;
+}
+i.icon.replied {
+  color: #000;
+}
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 

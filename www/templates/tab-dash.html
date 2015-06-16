@@ -6,9 +6,9 @@
                     <div class="time">
                         <span am-time-ago="question.timestamp"></span><br/>
                         <span class="status">
-                            <i ng-if="question.status == 'unread'" class="icon ion-eye-disabled placeholder-icon"></i>
-                            <i ng-if="question.status == 'read'" class="icon ion-eye placeholder-icon"></i>
-                            <i ng-if="question.status == 'replied'" class="icon ion-android-checkmark-circle placeholder-icon"></i>
+                            <i ng-if="question.status == 'unread'" class="icon ion-eye-disabled placeholder-icon unread"></i>
+                            <i ng-if="question.status == 'read'" class="icon ion-eye placeholder-icon read"></i>
+                            <i ng-if="question.status == 'replied'" class="icon ion-android-checkmark-circle placeholder-icon replied"></i>
                         </span>
                     </div>
                     <img class="dash-avatar" ng-src="{{question.fromId == authData.facebook.id ? 'https://graph.facebook.com/v2.3/' + question.toId + '/picture' : 'img/anon.png'}}">
