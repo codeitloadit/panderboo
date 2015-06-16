@@ -19,17 +19,10 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
+    .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, Friends) {
         $scope.friends = Friends;
-        //$scope.$on('$ionicView.beforeEnter', function () {
-        //    if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
-        //        $scope.refresh();
-        //    }
-        //});
         $scope.refresh = function () {
             $ionicLoading.show();
-            //$scope.authData = AuthData.authData;
-            $scope.phrase = '';
             Friends.fetchFriends(function (friends) {
                 $scope.friends = friends;
                 $scope.$broadcast('scroll.refreshComplete');

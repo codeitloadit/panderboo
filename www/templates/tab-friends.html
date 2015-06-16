@@ -4,7 +4,7 @@
         <ion-list>
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Search" ng-model="$parent.phrase" ng-change="friends.filterFriends(phrase)">
+                <input type="text" placeholder="Search" ng-model="friends.phrase" ng-change="friends.filterFriends()">
             </label>
             <ion-item class="item item-divider" ng-click="reload()">
                 Active Friends
