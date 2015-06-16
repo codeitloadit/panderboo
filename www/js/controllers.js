@@ -9,18 +9,10 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.refresh = function () {
             $ionicLoading.show();
             $scope.authData = AuthData.authData;
-            Questions.fetchQuestions(function (questions) {
-                $scope.allQuestions = questions;
-                $scope.questions = [];
-                $scope.allQuestions.$loaded(function () {
-                    angular.forEach($scope.allQuestions.reverse(), function (question) {
-                        if (question.fromId == $scope.authData.facebook.id || question.toId == $scope.authData.facebook.id) {
-                            $scope.questions.push(question);
-                        }
-                    });
-                    $scope.$broadcast('scroll.refreshComplete');
-                    $ionicLoading.hide();
-                });
+            $scope.questions = Questions;
+            $scope.questions.$loaded(function () {
+                $scope.$broadcast('scroll.refreshComplete');
+                $ionicLoading.hide();
             });
         };
     })
@@ -51,7 +43,7 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.text = '';
         $scope.submitQuestion = function (text) {
             if (text) {
-                Questions.questions.$add({
+                Questions.$add({
                     question: text,
                     fromId: AuthData.authData.facebook.id,
                     fromName: AuthData.authData.facebook.displayName,
@@ -70,7 +62,7 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.logout = function () {
             FirebaseAuth.$unauth();
             AuthData.authData = null;
-            Questions.questions = [];
+            Questions = [];
             Friends.clear();
             $state.go('login');
         };

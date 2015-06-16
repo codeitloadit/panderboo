@@ -1,10 +1,10 @@
 <ion-view view-title="Dashboard">
     <ion-content>
         <ion-list>
-            <ion-item class="item dash-item" ng-repeat="question in questions">
+            <ion-item class="item dash-item" ng-repeat="question in questions | orderBy:'timestamp':true">
                 <div>
                     <div class="time">
-                        {{question.timestamp}}<br/>
+                        <span am-time-ago="question.timestamp"></span><br/>
                         <span class="status"><i class="icon ion-eye-disabled placeholder-icon status"></i></span>
                     </div>
                     <img class="dash-avatar" ng-src="{{question.fromId == authData.facebook.id ? 'https://graph.facebook.com/v2.3/' + question.toId + '/picture' : 'img/anon.png'}}">

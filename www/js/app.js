@@ -1,6 +1,6 @@
-angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth'])
+angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth', 'angularMoment'])
 
-    .run(function($ionicPlatform, $rootScope, AuthData, $state, Friends, $ionicLoading) {
+    .run(function($ionicPlatform, $rootScope, AuthData, $state, Friends, $ionicLoading, amMoment) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -19,6 +19,8 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 event.preventDefault();
             }
         });
+
+        amMoment.changeLocale('en');
     })
 
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

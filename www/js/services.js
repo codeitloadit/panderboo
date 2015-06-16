@@ -62,10 +62,6 @@ angular.module('panderboo.services', [])
 
     .factory('Questions', function ($firebaseArray) {
         var ref = new Firebase('https://panderboo.firebaseio.com/questions');
-        var factory = {};
-        factory.fetchQuestions = function (callback) {
-            factory.questions = $firebaseArray(ref);
-            return callback(factory.questions);
-        };
-        return factory;
-    });
+        return $firebaseArray(ref);
+    }
+);
