@@ -1,6 +1,6 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
+    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, Friends) {
         $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
@@ -11,21 +11,24 @@ angular.module('panderboo.controllers', ['firebase'])
             $scope.authData = AuthData.authData;
             $scope.questions = Questions;
             $scope.questions.$loaded(function () {
-                $scope.$broadcast('scroll.refreshComplete');
                 $ionicLoading.hide();
+                Friends.fetchFriends(function(friends) {
+
+                });
             });
         };
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
-        $scope.$on('$ionicView.beforeEnter', function () {
-            if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
-                $scope.refresh();
-            }
-        });
+        $scope.friends = Friends;
+        //$scope.$on('$ionicView.beforeEnter', function () {
+        //    if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
+        //        $scope.refresh();
+        //    }
+        //});
         $scope.refresh = function () {
             $ionicLoading.show();
-            $scope.authData = AuthData.authData;
+            //$scope.authData = AuthData.authData;
             $scope.phrase = '';
             Friends.fetchFriends(function (friends) {
                 $scope.friends = friends;
