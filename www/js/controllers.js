@@ -14,7 +14,7 @@ angular.module('panderboo.controllers', ['firebase'])
                 $scope.questions = [];
                 $scope.allQuestions.$loaded(function () {
                     angular.forEach($scope.allQuestions.reverse(), function (question) {
-                        if (question.fromId == $scope.authData.facebook.id) {
+                        if (question.fromId == $scope.authData.facebook.id || question.toId == $scope.authData.facebook.id) {
                             $scope.questions.push(question);
                         }
                     });
@@ -51,10 +51,12 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.text = '';
         $scope.submitQuestion = function (text) {
             if (text) {
-                Questions.qustions.$add({
+                Questions.questions.$add({
                     question: text,
                     fromId: AuthData.authData.facebook.id,
+                    fromName: AuthData.authData.facebook.displayName,
                     toId: $scope.friend.id,
+                    toName: $scope.friend.name,
                     timestamp: Date.now(),
                     status: 'unread'
                 });
