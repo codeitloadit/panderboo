@@ -7,6 +7,10 @@ angular.module('panderboo.services', [])
     .factory('AuthData', function (FirebaseAuth) {
         var factory = {};
         factory.authData = FirebaseAuth.$getAuth();
+        factory.unauth = function () {
+            FirebaseAuth.$unauth();
+            authData = null;
+        };
         return factory;
     })
 

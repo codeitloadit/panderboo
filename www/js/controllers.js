@@ -1,6 +1,6 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions) {
+    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, Friends) {
         $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
@@ -11,21 +11,25 @@ angular.module('panderboo.controllers', ['firebase'])
             $scope.authData = AuthData.authData;
             $scope.questions = Questions;
             $scope.questions.$loaded(function () {
-                $ionicLoading.hide();
+                Friends.fetchFriends(function (friends) {
+                    $scope.friends = friends;
+                    angular.forEach($scope.questions, function (question) {
+                        angular.forEach($scope.friends.panderbooFriends, function (friend) {
+                            if (question.fromId == $scope.authData.facebook.id && question.toId == friend.id) {
+                                question.friend = friend;
+                            }
+                        });
+                    });
+                    $ionicLoading.hide();
+                });
             });
         };
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
-        $scope.$on('$ionicView.beforeEnter', function () {
-            if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
-                $scope.refresh();
-            }
-        });
+        $scope.friends = Friends;
         $scope.refresh = function () {
             $ionicLoading.show();
-            $scope.authData = AuthData.authData;
-            $scope.phrase = '';
             Friends.fetchFriends(function (friends) {
                 $scope.friends = friends;
                 $scope.$broadcast('scroll.refreshComplete');
@@ -45,9 +49,7 @@ angular.module('panderboo.controllers', ['firebase'])
                 Questions.$add({
                     question: text,
                     fromId: AuthData.authData.facebook.id,
-                    fromName: AuthData.authData.facebook.displayName,
                     toId: $scope.friend.id,
-                    toName: $scope.friend.name,
                     timestamp: Date.now(),
                     status: 'unread'
                 });
@@ -56,11 +58,10 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('SettingsCtrl', function ($scope, $state, AuthData, FirebaseAuth, Friends, Questions) {
+    .controller('SettingsCtrl', function ($scope, $state, AuthData, Friends, Questions) {
         $scope.authData = AuthData;
         $scope.logout = function () {
-            FirebaseAuth.$unauth();
-            AuthData.authData = null;
+            AuthData.unauth();
             Questions = [];
             Friends.clear();
             $state.go('login');

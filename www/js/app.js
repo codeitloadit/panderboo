@@ -21,6 +21,24 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         });
 
         amMoment.changeLocale('en');
+
+        moment.locale('en', {
+            calendar: {
+                sameDay : 'LT',
+                nextDay : 'ddd',
+                nextWeek : 'MMM DD',
+                lastDay : 'ddd',
+                lastWeek : 'MMM DD',
+                sameElse : 'MMM DD'
+            },
+            meridiem : function (hours) {
+                if (hours > 11) {
+                    return 'pm';
+                } else {
+                    return 'am';
+                }
+            }
+        });
     })
 
     .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
