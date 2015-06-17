@@ -1,6 +1,6 @@
 angular.module('panderboo.controllers', ['firebase'])
 
-    .controller('DashCtrl', function ($scope, $firebaseObject, $ionicLoading, AuthData, Questions, Friends) {
+    .controller('DashCtrl', function ($scope, $state, $firebaseObject, $ionicLoading, $timeout, AuthData, Questions, Friends) {
         $scope.$on('$ionicView.beforeEnter', function () {
             if (!$scope.authData || $scope.authData.facebook.id != AuthData.authData.facebook.id) {
                 $scope.refresh();
@@ -11,19 +11,37 @@ angular.module('panderboo.controllers', ['firebase'])
             $scope.authData = AuthData.authData;
             $scope.questions = Questions;
             $scope.questions.$loaded(function () {
-                Friends.fetchFriends(function (friends) {
-                    $scope.friends = friends;
-                    angular.forEach($scope.questions, function (question) {
-                        angular.forEach($scope.friends.panderbooFriends, function (friend) {
-                            if (question.fromId == $scope.authData.facebook.id && question.toId == friend.id) {
-                                question.friend = friend;
-                            }
-                        });
-                    });
+                $timeout(function () {
                     $ionicLoading.hide();
-                });
+                }, 2000);
             });
         };
+        var holdStart = 0;
+        $scope.click = function (question) {
+            if (question.status != 'unread' || question.fromId == $scope.authData.facebook.id) {
+                $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+            }
+        };
+        $scope.touch = function (question) {
+            if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
+                holdStart = Date.now();
+                var localStart = holdStart;
+                $timeout(function () {
+                    if (localStart == holdStart) {
+                        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+                    }
+                }, 500);
+            } else {
+                $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+            }
+        };
+        $scope.release = function () {
+            holdStart = 0;
+        };
+    })
+
+    .controller('QuestionDetailCtrl', function ($scope, $stateParams) {
+        $scope.question = angular.fromJson($stateParams.questionObj);
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
@@ -92,4 +110,5 @@ angular.module('panderboo.controllers', ['firebase'])
                 });
             }
         };
-    });
+    }
+);

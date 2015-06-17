@@ -1,7 +1,7 @@
 angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.services', 'firebase', 'ngCordovaOauth', 'angularMoment'])
 
-    .run(function($ionicPlatform, $rootScope, AuthData, $state, Friends, $ionicLoading, amMoment) {
-        $ionicPlatform.ready(function() {
+    .run(function ($ionicPlatform, $rootScope, AuthData, $state, Friends, $ionicLoading, amMoment) {
+        $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -24,14 +24,14 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
 
         moment.locale('en', {
             calendar: {
-                sameDay : 'LT',
-                nextDay : 'ddd',
-                nextWeek : 'MMM DD',
-                lastDay : 'ddd',
-                lastWeek : 'MMM DD',
-                sameElse : 'MMM DD'
+                sameDay: 'LT',
+                nextDay: '[Tomorrow]',
+                nextWeek: 'MMM DD',
+                lastDay: '[Yesterday]',
+                lastWeek: 'MMM DD',
+                sameElse: 'MMM DD'
             },
-            meridiem : function (hours) {
+            meridiem: function (hours) {
                 if (hours > 11) {
                     return 'pm';
                 } else {
@@ -41,7 +41,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         });
     })
 
-    .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         // Enable native scrolls for Android platform only, as you see, we're disabling jsScrolling to achieve this.
         if (ionic.Platform.isAndroid()) {
             $ionicConfigProvider.scrolling.jsScrolling(false);
@@ -65,6 +65,15 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                     'tab-dash': {
                         templateUrl: 'templates/tab-dash.html',
                         controller: 'DashCtrl'
+                    }
+                }
+            })
+            .state('tab.question-detail', {
+                url: '/question/:questionObj',
+                views: {
+                    'tab-dash': {
+                        templateUrl: 'templates/question-detail.html',
+                        controller: 'QuestionDetailCtrl'
                     }
                 }
             })

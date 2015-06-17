@@ -30,6 +30,7 @@ angular.module('panderboo.services', [])
                 return 1;
             return 0;
         }
+
         factory.fetchFriends = function (callback) {
             factory.clear();
             var panderbooFriendsUrl = 'https://graph.facebook.com/v2.3/me?fields=friends.limit(9999){name,first_name,middle_name,last_name,picture}&limit=9999&access_token=' + AuthData.authData.facebook.accessToken;
@@ -46,7 +47,7 @@ angular.module('panderboo.services', [])
                         });
                 });
         };
-        function filterByPhrase (friends) {
+        function filterByPhrase(friends) {
             var result = [];
             angular.forEach(friends, function (friend) {
                 if (friend.last_name.toLowerCase().indexOf(factory.phrase.toLowerCase()) >= 0 || friend.first_name.toLowerCase().indexOf(factory.phrase.toLowerCase()) >= 0 || (friend.middle_name && friend.middle_name.toLowerCase().indexOf(factory.phrase.toLowerCase()) >= 0)) {
@@ -55,6 +56,7 @@ angular.module('panderboo.services', [])
             });
             return result;
         }
+
         factory.filterFriends = function () {
             factory.panderbooFriends = filterByPhrase(factory.allPanderbooFriends);
             factory.invitableFriends = filterByPhrase(factory.allInvitableFriends);
@@ -67,8 +69,21 @@ angular.module('panderboo.services', [])
         return factory;
     })
 
-    .factory('Questions', function ($firebaseArray) {
+    .factory('Questions', function ($firebaseArray, AuthData, Friends) {
         var ref = new Firebase('https://panderboo.firebaseio.com/questions');
-        return $firebaseArray(ref);
+        var extendedArray = $firebaseArray.$extend({
+            $$added: function (snapshot) {
+                var question = snapshot.val();
+                Friends.fetchFriends(function (friends) {
+                    angular.forEach(friends.panderbooFriends, function (friend) {
+                        if (question.fromId == AuthData.authData.facebook.id && question.toId == friend.id) {
+                            question.friend = friend;
+                        }
+                    });
+                });
+                return question;
+            }
+        });
+        return extendedArray(ref);
     }
 );
