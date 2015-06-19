@@ -1,2 +1,2 @@
 # Panderboo
-Ionic Anonymous Messaging App
+Ionic Anonymous Facebook Messaging App
