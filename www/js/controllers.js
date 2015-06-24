@@ -16,28 +16,38 @@ angular.module('panderboo.controllers', ['firebase'])
                 }, 2000);
             });
         };
-        var holdStart = 0;
-        $scope.click = function (question) {
+        $scope.tap = function (question) {
             if (question.status != 'unread' || question.fromId == $scope.authData.facebook.id) {
                 $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
             }
         };
-        $scope.touch = function (question) {
-            if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
-                holdStart = Date.now();
-                var localStart = holdStart;
-                $timeout(function () {
-                    if (localStart == holdStart) {
-                        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
-                    }
-                }, 500);
-            } else {
-                $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
-            }
+        $scope.doubleTap = function (question) {
+            $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
         };
-        $scope.release = function () {
-            holdStart = 0;
-        };
+        //var holdStart = 0;
+        //$scope.touch = function (question) {
+        //    if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
+        //        holdStart = Date.now();
+        //        var localStart = holdStart;
+        //        $timeout(function () {
+        //            if (localStart == holdStart) {
+        //                $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+        //            }
+        //        }, 500);
+        //    } else {
+        //        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+        //    }
+        //};
+        //$scope.release = function (question) {
+        //    if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
+        //        holdStart = 0;
+        //    } else {
+        //        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
+        //    }
+        //};
+        //$scope.resetHold = function () {
+        //    holdStart = 0;
+        //};
     })
 
     .controller('QuestionDetailCtrl', function ($scope, $stateParams) {

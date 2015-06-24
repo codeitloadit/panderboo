@@ -41,11 +41,18 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         });
     })
 
-    .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $provide) {
         // Enable native scrolls for Android platform only, as you see, we're disabling jsScrolling to achieve this.
-        if (ionic.Platform.isAndroid()) {
+        if (ionic.Platform.isAndroid() && !!window.cordova) {
             $ionicConfigProvider.scrolling.jsScrolling(false);
         }
+        function $LocationDecorator($location) {
+            $location.hash = function(value) {
+                return $location.__hash(value);
+            };
+            return $location;
+        }
+        $provide.decorator('$location', ['$delegate', $LocationDecorator]);
 
         $stateProvider
             .state('login', {

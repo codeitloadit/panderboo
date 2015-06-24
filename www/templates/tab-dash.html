@@ -1,7 +1,7 @@
 <ion-view view-title="Dashboard">
-    <ion-content>
+    <ion-content on-scroll="resetHold()">
         <ion-list>
-            <ion-item class="item dash-item" ng-repeat="question in questions | orderBy:'timestamp':true" ng-click="click(question)" on-hold="touch(question)" ng-mouseup="release()" on-release="release()">
+            <ion-item class="item dash-item" ng-repeat="question in questions | orderBy:'timestamp':true" on-tap="tap(question)" on-double-tap="doubleTap(question)">
                 <div>
                     <div class="time">
                         <span>{{question.timestamp | amCalendar}}</span>
@@ -15,7 +15,7 @@
                     <img class="dash-avatar" ng-src="{{question.fromId == authData.facebook.id ? question.friend.picture.data.url : 'img/anon.png'}}">
                     <h2>{{question.fromId == authData.facebook.id ? question.friend.name : 'Anonymous'}}</h2>
                     <div ng-switch="question.fromId != authData.facebook.id && question.status == 'unread'">
-                        <p ng-switch-when="true">{{question.question | limitTo : 5 : 0}}... - Press and hold to view</p>
+                        <p ng-switch-when="true">{{question.question | limitTo : 5 : 0}}...<span class="press-to-view"> (Double tap to view)</span></p>
                         <p ng-switch-default>{{question.question}}</p>
                     </div>
                 </div>

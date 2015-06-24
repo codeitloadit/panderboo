@@ -94,6 +94,7 @@ $dark:                            #444 !default;
   color: #888 !important; }
 
 .dash-avatar {
+  background-image: url('../img/anon.png');
   float: left;
   position: relative;
   left: 4px;
@@ -120,11 +121,17 @@ $dark:                            #444 !default;
   height: 34px;
   border-radius: 3px; }
 
+i.icon.unread {
+  color: #ddd; }
+
 i.icon.read {
-  color: #444; }
+  color: #aaa; }
 
 i.icon.replied {
-  color: #000; }
+  color: #777; }
+
+.press-to-view {
+  color: #ddd; }
 
 /*!
   Ionicons, v2.0.1
