@@ -1,5 +1,11 @@
-<ion-view view-title="QUESTION DETAIL">
+<ion-view view-title="{{question.question | limitTo : 5 : 0}}...">
     <ion-content class="padding">
-        {{question}}
+        <img id="friend-facebook-image" ng-src="{{question.fromId == authData.facebook.id ? question.friend.picture.data.url : 'img/anon.png'}}">
+        <h4>{{question.fromId == authData.facebook.id ? question.friend.name : 'Anonymous'}}</h4>
+        <p>{{question.question}}</p>
+        <label id="question-input" class="item item-input">
+            <textarea placeholder="Answer question..." ng-model="$parent.text"></textarea>
+        </label>
+        <button class="button button-block button-positive" ng-click="submitQuestion(text)">Submit Answer</button>
     </ion-content>
 </ion-view>

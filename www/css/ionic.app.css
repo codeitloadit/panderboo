@@ -66,6 +66,7 @@ $dark:                            #444 !default;
   padding-top: 6px; }
 
 .facebook-image {
+  background-image: url('../img/anon.png');
   border-radius: 20px; }
 
 .dash-item {
@@ -104,6 +105,7 @@ $dark:                            #444 !default;
   margin-right: 16px; }
 
 #friend-facebook-image {
+  background-image: url('../img/anon.png');
   float: left;
   border-radius: 2px; }
 

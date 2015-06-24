@@ -50,7 +50,8 @@ angular.module('panderboo.controllers', ['firebase'])
         //};
     })
 
-    .controller('QuestionDetailCtrl', function ($scope, $stateParams) {
+    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData) {
+        $scope.authData = AuthData.authData;
         $scope.question = angular.fromJson($stateParams.questionObj);
     })
 
