@@ -13,7 +13,7 @@ angular.module('panderboo.controllers', ['firebase'])
             $scope.questions.$loaded(function () {
                 $timeout(function () {
                     $ionicLoading.hide();
-                }, 2000);
+                }, 1000);
             });
         };
         $scope.tap = function (question) {
@@ -24,33 +24,10 @@ angular.module('panderboo.controllers', ['firebase'])
         $scope.doubleTap = function (question) {
             $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
         };
-        //var holdStart = 0;
-        //$scope.touch = function (question) {
-        //    if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
-        //        holdStart = Date.now();
-        //        var localStart = holdStart;
-        //        $timeout(function () {
-        //            if (localStart == holdStart) {
-        //                $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
-        //            }
-        //        }, 500);
-        //    } else {
-        //        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
-        //    }
-        //};
-        //$scope.release = function (question) {
-        //    if (question.status == 'unread' && question.fromId != $scope.authData.facebook.id) {
-        //        holdStart = 0;
-        //    } else {
-        //        $state.go('tab.question-detail', {questionObj: angular.toJson(question)});
-        //    }
-        //};
-        //$scope.resetHold = function () {
-        //    holdStart = 0;
-        //};
     })
 
-    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData) {
+    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope) {
+        $rootScope.hideTabs = true;
         $scope.authData = AuthData.authData;
         $scope.question = angular.fromJson($stateParams.questionObj);
     })
@@ -88,7 +65,7 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData, Friends, Questions) {
-        $scope.authData = AuthData;
+        $scope.authData = AuthData.authData;
         $scope.logout = function () {
             AuthData.unauth();
             Questions = [];

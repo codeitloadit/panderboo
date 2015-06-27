@@ -1,11 +1,40 @@
 <ion-view view-title="{{question.question | limitTo : 5 : 0}}...">
     <ion-content class="padding">
-        <img id="friend-facebook-image" ng-src="{{question.fromId == authData.facebook.id ? question.friend.picture.data.url : 'img/anon.png'}}">
-        <h4>{{question.fromId == authData.facebook.id ? question.friend.name : 'Anonymous'}}</h4>
-        <p>{{question.question}}</p>
-        <label id="question-input" class="item item-input">
-            <textarea placeholder="Answer question..." ng-model="$parent.text"></textarea>
-        </label>
-        <button class="button button-block button-positive" ng-click="submitQuestion(text)">Submit Answer</button>
+        <div id="chat-bubbles">
+            <img class="chat-avatar anon-chat-avatar" src="img/anon.png">
+            <div class="chat-bubble anon-chat-bubble">
+                What do you think of the new chat bubbles?<br/>
+                <div class="chat-info">Sent <span>{{question.timestamp | amCalendar}}</span></div>
+            </div>
+            <div class="clear-floats">&nbsp;</div>
+
+            <img class="chat-avatar user-chat-avatar" src="https://graph.facebook.com/v2.3/{{authData.facebook.id}}/picture">
+            <div class="chat-bubble user-chat-bubble">
+                They are pretty cool, but they still need a little work<br/>
+                <div class="chat-info">Sent <span>{{question.timestamp | amCalendar}}</span></div>
+            </div>
+            <div class="clear-floats">&nbsp;</div>
+
+            <img class="chat-avatar anon-chat-avatar" src="img/anon.png">
+            <div class="chat-bubble anon-chat-bubble">
+                Yeah, I agree..<br/>
+                <div class="chat-info">Sent <span>{{question.timestamp | amCalendar}}</span></div>
+            </div>
+            <div class="clear-floats">&nbsp;</div>
+
+            <img class="chat-avatar user-chat-avatar" src="https://graph.facebook.com/v2.3/{{authData.facebook.id}}/picture">
+            <div class="chat-bubble user-chat-bubble">
+                =/<br/>
+                <div class="chat-info">Sent <span>{{question.timestamp | amCalendar}}</span></div>
+            </div>
+            <div class="clear-floats">&nbsp;</div>
+        </div>
     </ion-content>
+
+    <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+        <label class="item-input-wrapper">
+            <input type="text" placeholder="Type a message..." ng-model="input.message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+        </label>
+        <button class="button button-icon icon ion-paper-airplane" ng-click="sendMessage()" ng-disabled="!input.message || input.message === ''"></button>
+    </ion-footer-bar>
 </ion-view>

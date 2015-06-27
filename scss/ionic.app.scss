@@ -25,6 +25,9 @@ $dark:                            #444 !default;
 //$royal:                           #000 !default;
 //$dark:                            #111 !default;
 
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
 
 .item-avatar i:first-child, .item-avatar .item-img {
   position: absolute;
@@ -155,6 +158,70 @@ i.icon.replied {
 .press-to-view {
   color: #ddd;
 }
+
+.clear-floats {
+  clear: both !important;
+}
+.chat-avatar {
+  background-image: url('../img/anon.png');
+  float: left;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+.user-chat-avatar {
+  float: right;
+}
+
+.chat-bubble {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 10px 18px;
+  position: relative;
+  min-width: 40%;
+  max-width: 70%;
+  font-weight: 500;
+}
+.chat-bubble:before {
+  content: "\00a0";
+  display: block;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  top: 18px;
+  -webkit-transform: rotate(45deg);
+}
+.anon-chat-bubble {
+  background-color: #158ffe;
+  color: #fff;
+  margin-left: 18px;
+}
+.anon-chat-bubble:before {
+  background-color: #158ffe;
+  left: -8px;
+}
+.user-chat-bubble {
+  background-color: #e6e5eb;
+  float: right;
+  position: relative;
+  right: 18px;
+}
+.user-chat-bubble:before {
+  background-color: #e6e5eb;
+  right: -8px;
+}
+
+.chat-info {
+  font-weight: 200;
+  font-style: italic;
+  font-size: 12px;
+  float: right;
+}
+
+.item-input-wrapper  {
+  background-color: rgb(248, 248, 248) !important;
+}
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
