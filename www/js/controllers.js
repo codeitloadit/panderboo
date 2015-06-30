@@ -27,7 +27,12 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope) {
-        $rootScope.hideTabs = true;
+        $scope.$on('$ionicView.beforeEnter', function () {
+            $rootScope.hideTabs = true;
+        });
+        $scope.$on('$ionicView.beforeLeave', function () {
+            $rootScope.hideTabs = false;
+        });
         $scope.authData = AuthData.authData;
         $scope.question = angular.fromJson($stateParams.questionObj);
     })
