@@ -5,6 +5,7 @@
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search" ng-model="friends.phrase" ng-change="friends.filterFriends()">
+                <i class="icon ion-close placeholder-icon friends-cancel-search" ng-if="friends.phrase" on-touch="clearSearch()"></i>
             </label>
             <ion-item class="item item-divider" ng-click="reload()">
                 Active Friends

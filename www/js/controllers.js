@@ -49,7 +49,11 @@ angular.module('panderboo.controllers', ['firebase'])
         };
         $scope.loadFriend = function (friend) {
             $state.go('tab.friend-detail', {friendObj: angular.toJson(friend)});
-        }
+        };
+        $scope.clearSearch = function () {
+            $scope.friends.phrase = '';
+            $scope.friends.filterFriends();
+        };
     })
 
     .controller('FriendDetailCtrl', function ($scope, $stateParams, AuthData, Questions) {

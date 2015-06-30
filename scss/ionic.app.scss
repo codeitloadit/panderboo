@@ -222,7 +222,9 @@ i.icon.replied {
   background-color: rgb(248, 248, 248) !important;
 }
 
-
+.friends-cancel-search {
+  margin-right: 12px;
+}
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 

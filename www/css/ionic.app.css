@@ -197,6 +197,9 @@ i.icon.replied {
 .item-input-wrapper {
   background-color: #f8f8f8 !important; }
 
+.friends-cancel-search {
+  margin-right: 12px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
