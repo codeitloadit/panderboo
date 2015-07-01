@@ -24,7 +24,7 @@
 
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
         <label class="item-input-wrapper">
-            <input type="text" placeholder="Type a message..." ng-model="text" on-return="submitMessage(text); closeKeyboard()" ng-focus="inputFocus()" ng-blur="inputBlur()" />
+            <input type="text" placeholder="Type a message..." ng-model="text" ng-enter="submitMessage(text); closeKeyboard()" ng-focus="inputFocus()" ng-blur="inputBlur()" />
         </label>
         <button class="button button-icon icon ion-paper-airplane" ng-click="submitMessage(text)" ng-disabled="!text || text === ''"></button>
     </ion-footer-bar>
