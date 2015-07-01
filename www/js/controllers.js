@@ -26,7 +26,7 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope) {
+    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope, $firebaseArray, $ionicScrollDelegate) {
         $scope.$on('$ionicView.beforeEnter', function () {
             $rootScope.hideTabs = true;
         });
@@ -35,6 +35,24 @@ angular.module('panderboo.controllers', ['firebase'])
         });
         $scope.authData = AuthData.authData;
         $scope.question = angular.fromJson($stateParams.questionObj);
+        var ref = new Firebase('https://panderboo.firebaseio.com/questions/' + $scope.question.id + '/thread');
+        $scope.thread = new $firebaseArray(ref);
+        $scope.thread.$loaded(function () {
+            $ionicScrollDelegate.scrollBottom();
+        });
+        ref.on('value', function() {
+            $ionicScrollDelegate.scrollBottom();
+        });
+        $scope.submitMessage = function (text) {
+            if (text) {
+                $scope.thread.$add({
+                    message: text,
+                    fromId: AuthData.authData.facebook.id,
+                    timestamp: Date.now()
+                });
+                $scope.text = '';
+            }
+        };
     })
 
     .controller('FriendsCtrl', function ($scope, $state, $ionicLoading, AuthData, Friends) {
@@ -56,17 +74,27 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('FriendDetailCtrl', function ($scope, $stateParams, AuthData, Questions) {
+    .controller('FriendDetailCtrl', function ($scope, $stateParams, AuthData, Questions, $firebaseArray) {
         $scope.friend = angular.fromJson($stateParams.friendObj);
-        $scope.text = '';
         $scope.submitQuestion = function (text) {
             if (text) {
+                var timestamp = Date.now();
                 Questions.$add({
+                    thread: [],
                     question: text,
                     fromId: AuthData.authData.facebook.id,
                     toId: $scope.friend.id,
-                    timestamp: Date.now(),
+                    timestamp: timestamp,
                     status: 'unread'
+                }).then(function(ref) {
+                    ref.update({id: ref.key()});
+                    var threadRef = new Firebase('https://panderboo.firebaseio.com/questions/' + ref.key() + '/thread');
+                    var thread = $firebaseArray(threadRef);
+                    thread.$add({
+                        message: text,
+                        fromId: AuthData.authData.facebook.id,
+                        timestamp: timestamp
+                    });
                 });
                 $scope.text = '';
             }
