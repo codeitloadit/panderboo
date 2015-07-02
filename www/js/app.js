@@ -47,39 +47,40 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
             $ionicConfigProvider.scrolling.jsScrolling(false);
         }
         function $LocationDecorator($location) {
-            $location.hash = function(value) {
+            $location.hash = function (value) {
                 return $location.__hash(value);
             };
             return $location;
         }
+
         $provide.decorator('$location', ['$delegate', $LocationDecorator]);
 
         $stateProvider
             .state('login', {
-                url: "/login",
-                templateUrl: "templates/login.html",
+                url: '/login',
+                templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
             })
 
             .state('tab', {
-                url: "/tab",
+                url: '/tab',
                 abstract: true,
-                templateUrl: "templates/tabs.html"
+                templateUrl: 'templates/tabs.html'
             })
-            .state('tab.dash', {
-                url: '/dash',
+            .state('tab.conversations', {
+                url: '/conversations',
                 views: {
-                    'tab-dash': {
-                        templateUrl: 'templates/tab-dash.html',
-                        controller: 'DashCtrl'
+                    'tab-conversations': {
+                        templateUrl: 'templates/tab-conversations.html',
+                        controller: 'ConversationsCtrl'
                     }
                 }
             })
-            .state('tab.question-detail', {
-                url: '/question/:questionObj',
+            .state('tab.conversation-detail', {
+                url: '/conversation/:conversationObj',
                 views: {
-                    'tab-dash': {
-                        templateUrl: 'templates/question-detail.html',
+                    'tab-conversations': {
+                        templateUrl: 'templates/conversation-detail.html',
                         controller: 'QuestionDetailCtrl'
                     }
                 }
@@ -115,18 +116,18 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             if ($injector.get('AuthData').authData) {
-                $state.go('tab.dash');
+                $state.go('tab.conversations');
             } else {
                 $state.go('login');
             }
         });
     })
 
-    .directive('ngEnter', function() {
-        return function(scope, element, attrs) {
-            element.bind("keydown keypress", function(event) {
-                if(event.which === 13) {
-                    scope.$apply(function(){
+    .directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if (event.which === 13) {
+                    scope.$apply(function () {
                         scope.$eval(attrs.ngEnter);
                     });
 
@@ -136,11 +137,11 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         };
     })
 
-    .directive('focusInput', function($timeout) {
+    .directive('focusInput', function ($timeout) {
         return {
-            link: function(scope, element, attrs) {
-                element.bind('click', function() {
-                    $timeout(function() {
+            link: function (scope, element, attrs) {
+                element.bind('click', function () {
+                    $timeout(function () {
                         element.parent().find('input')[0].focus();
                     });
                 });

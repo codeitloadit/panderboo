@@ -1,20 +1,21 @@
-<ion-view view-title="{{question.question | limitTo : 5 : 0}}...">
+<ion-view view-title="{{conversation.message | limitTo : 5 : 0}}...">
     <ion-content class="padding">
+        <button class="button button-block button-outline button-assertive" ng-repeat="error in errors">{{error}}</button>
         <div id="chat-bubbles">
-            <div ng-repeat="thread in thread">
-                <div ng-if="thread.fromId == authData.facebook.id">
+            <div ng-repeat="message in messages | orderBy:'timestamp':false">
+                <div ng-if="message.conversationId == conversation.$id && message.senderId == authData.facebook.id">
                     <img class="chat-avatar user-chat-avatar" ng-src="https://graph.facebook.com/v2.3/{{authData.facebook.id}}/picture">
                     <div class="chat-bubble user-chat-bubble">
-                        {{thread.message}}<br/>
-                        <div class="chat-info">Sent <span>{{thread.timestamp | amCalendar}}</span></div>
+                        {{message.text}}<br/>
+                        <div class="chat-info">Sent <span>{{message.timestamp | amCalendar}}</span></div>
                     </div>
                     <div class="clear-floats">&nbsp;</div>
                 </div>
-                <div ng-if="thread.fromId != authData.facebook.id">
-                    <img class="chat-avatar anon-chat-avatar" ng-src="{{question.fromId == authData.facebook.id ? question.friend.picture.data.url : 'img/anon.png'}}">
+                <div ng-if="message.conversationId == conversation.$id && message.senderId != authData.facebook.id">
+                    <img class="chat-avatar anon-chat-avatar" ng-src="{{conversation.senderId == authData.facebook.id ? conversation.friend.picture.data.url : 'img/anon.png'}}">
                     <div class="chat-bubble anon-chat-bubble">
-                        {{thread.message}}<br/>
-                        <div class="chat-info">Sent <span>{{thread.timestamp | amCalendar}}</span></div>
+                        {{message.text}}<br/>
+                        <div class="chat-info">Sent <span>{{message.timestamp | amCalendar}}</span></div>
                     </div>
                     <div class="clear-floats">&nbsp;</div>
                 </div>
