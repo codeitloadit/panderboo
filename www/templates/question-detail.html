@@ -22,10 +22,10 @@
         </div>
     </ion-content>
 
-    <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+    <ion-footer-bar class="bar-stable item-input-inset">
         <label class="item-input-wrapper">
-            <input type="text" placeholder="Type a message..." ng-model="text" ng-enter="submitMessage(text); closeKeyboard()" ng-focus="inputFocus()" ng-blur="inputBlur()" />
+            <input type="text" placeholder="Type a message..." ng-model="text" ng-enter="submitMessage(text)" />
         </label>
-        <button class="button button-icon icon ion-paper-airplane" ng-click="submitMessage(text)" ng-disabled="!text || text === ''"></button>
+        <button class="button button-icon icon ion-paper-airplane" ng-click="submitMessage(text)" ng-disabled="!text || text === ''" focus-input></button>
     </ion-footer-bar>
 </ion-view>
