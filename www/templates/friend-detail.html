@@ -1,43 +1,34 @@
 <ion-view view-title="{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}">
     <ion-content class="padding">
         <button class="button button-block button-outline button-assertive" ng-repeat="error in errors">{{error}}</button>
-        <img id="friend-facebook-image" ng-src="https://graph.facebook.com/v2.3/{{friend.id}}/picture?width=50">
+        <img id="friend-facebook-image" ng-src="{{friend.picture.data.url}}">
         <label id="question-input" class="item item-input">
-            <textarea placeholder="Ask {{friend.first_name}} a question..." ng-model="$parent.text"></textarea>
+            <textarea placeholder="Type a message..." ng-model="$parent.text"></textarea>
         </label>
-        <button class="button button-block button-positive" ng-click="submitQuestion(text)">Submit Question</button>
-        <div class="friend-history-list list list-inset">
+        <button class="button button-block button-positive" ng-click="submitQuestion(text)">Start New Conversation</button>
+        <ion-list>
             <ion-item class="item item-divider">
-                Recent Questions
-                <span class="item-note">4</span>
+                Recent Conversations with {{friend.first_name}}
             </ion-item>
-            <ion-item>
-                What is your annual salary?
+            <ion-item class="item" ng-repeat="conversation in conversations | orderBy:'timestamp':true" ng-if="conversation.senderId == authData.facebook.id" on-tap="tap(conversation)" on-double-tap="doubleTap(conversation)">
+                <p>{{conversation.message}}</p>
             </ion-item>
-            <ion-item>
-                What do you do for a living?
-            </ion-item>
-            <ion-item>
-                Do you love your job?
-            </ion-item>
-            <ion-item>
-                What did you want to be when you grew up?
-            </ion-item>
-        </div>
-        <div class="friend-history-list list list-inset">
-            <ion-item class="item item-divider">
-                Recent Polls
-                <span class="item-note">3</span>
-            </ion-item>
-            <ion-item>
-                If you could have any job, what would you want to do/be?
-            </ion-item>
-            <ion-item>
-                Which came first the chicken or the egg?
-            </ion-item>
-            <ion-item>
-                How many keys on your key ring?
-            </ion-item>
-        </div>
+            <!--<ion-item class="item dash-item" ng-repeat="conversation in conversations | orderBy:'timestamp':true" ng-if="conversation.senderId == authData.facebook.id" on-tap="tap(conversation)" on-double-tap="doubleTap(conversation)">-->
+                <!--<div>-->
+                    <!--<div class="time">-->
+                        <!--<span>{{conversation.timestamp | amCalendar}}</span>-->
+                        <!--<br/>-->
+                        <!--<span class="status">-->
+                            <!--<i ng-if="conversation.status == 'unread'" class="icon ion-eye-disabled placeholder-icon unread"></i>-->
+                            <!--<i ng-if="conversation.status == 'read'" class="icon ion-eye placeholder-icon read"></i>-->
+                            <!--<i ng-if="conversation.status == 'replied'" class="icon ion-android-checkmark-circle placeholder-icon replied"></i>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                    <!--<img class="dash-avatar" ng-src="{{friend.picture.data.url}}">-->
+                    <!--<h2>{{friend.name}}</h2>-->
+                    <!--<p>{{conversation.message}}</p>-->
+                <!--</div>-->
+            <!--</ion-item>-->
+        </ion-list>
     </ion-content>
 </ion-view>

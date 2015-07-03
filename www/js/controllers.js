@@ -47,7 +47,7 @@ angular.module('panderboo.controllers', ['firebase'])
         };
     })
 
-    .controller('QuestionDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope, $firebaseArray, $ionicScrollDelegate, Messages) {
+    .controller('ConversationDetailCtrl', function ($scope, $stateParams, AuthData, $rootScope, $firebaseArray, $ionicScrollDelegate, Messages) {
         $scope.$on('$ionicView.beforeEnter', function () {
             $rootScope.hideTabs = true;
         });
@@ -103,11 +103,13 @@ angular.module('panderboo.controllers', ['firebase'])
     })
 
     .controller('FriendDetailCtrl', function ($scope, $state, $stateParams, AuthData, Conversations, Messages) {
+        $scope.authData = AuthData.authData;
         $scope.friend = angular.fromJson($stateParams.friendObj);
+        $scope.conversations = Conversations;
         $scope.submitQuestion = function (text) {
             if (text) {
                 var timestamp = Date.now();
-                Conversations.$add({
+                $scope.conversations.$add({
                     message: text,
                     senderId: AuthData.authData.facebook.id,
                     recipientId: $scope.friend.id,

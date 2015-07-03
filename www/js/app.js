@@ -46,13 +46,14 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
         if (ionic.Platform.isAndroid() && !!window.cordova) {
             $ionicConfigProvider.scrolling.jsScrolling(false);
         }
+
+        // Maintain scroll position for views.
         function $LocationDecorator($location) {
             $location.hash = function (value) {
                 return $location.__hash(value);
             };
             return $location;
         }
-
         $provide.decorator('$location', ['$delegate', $LocationDecorator]);
 
         $stateProvider
@@ -81,7 +82,7 @@ angular.module('panderboo', ['ionic', 'panderboo.controllers', 'panderboo.servic
                 views: {
                     'tab-conversations': {
                         templateUrl: 'templates/conversation-detail.html',
-                        controller: 'QuestionDetailCtrl'
+                        controller: 'ConversationDetailCtrl'
                     }
                 }
             })
