@@ -1,6 +1,6 @@
 <ion-view view-title="Settings">
     <ion-content id="settings-tab" class="padding center">
-        <img class="facebook-image" src="https://graph.facebook.com/v2.3/{{authData.facebook.id}}/picture?type=large" />
+        <img class="facebook-image" ng-src="https://graph.facebook.com/v2.3/{{authData.facebook.id}}/picture?type=large" />
         <div>{{authData.authData.facebook.displayName}}</div>
         <div>{{authData.authData.facebook.email}}</div>
         <button class="button button-block button-positive" ng-click="logout()">Logout</button>

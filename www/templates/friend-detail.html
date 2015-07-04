@@ -1,7 +1,9 @@
 <ion-view view-title="{{friend.first_name}} {{friend.middle_name}} {{friend.last_name}}">
     <ion-content class="padding">
         <button class="button button-block button-outline button-assertive" ng-repeat="error in errors">{{error}}</button>
-        <img id="friend-facebook-image" ng-src="{{friend.picture.data.url}}">
+        <div class="center">
+            <img id="friend-facebook-image" ng-src="https://graph.facebook.com/v2.3/{{friend.id}}/picture?type=large">
+        </div>
         <label id="question-input" class="item item-input">
             <textarea placeholder="Type a message..." ng-model="$parent.text"></textarea>
         </label>
@@ -10,7 +12,7 @@
             <ion-item class="item item-divider">
                 Recent Conversations with {{friend.first_name}}
             </ion-item>
-            <ion-item class="item" ng-repeat="conversation in conversations | orderBy:'timestamp':true" ng-if="conversation.senderId == authData.facebook.id" on-tap="tap(conversation)" on-double-tap="doubleTap(conversation)">
+            <ion-item class="item" ng-repeat="conversation in conversations | orderBy:'timestamp':true" ng-if="conversation.senderId == authData.facebook.id" on-tap="tap(conversation)">
                 <p>{{conversation.message}}</p>
             </ion-item>
             <!--<ion-item class="item dash-item" ng-repeat="conversation in conversations | orderBy:'timestamp':true" ng-if="conversation.senderId == authData.facebook.id" on-tap="tap(conversation)" on-double-tap="doubleTap(conversation)">-->

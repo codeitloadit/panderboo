@@ -125,13 +125,18 @@ body {
 
 #friend-facebook-image {
   background-image: url('../img/anon.png');
-  float: left;
-  border-radius: 2px;
+  //float: left;
+  border: 4px solid #aaa;
+  border-radius: 100px;
 }
 #question-input {
-  height: 50px;
+  height: 60px;
   border-radius: 2px;
-  margin-left: 58px !important;
+  margin-top: 4px !important;
+}
+#question-input textarea{
+  height: 54px;
+  resize: none;
 }
 .friend-history-list {
   border-radius: 2px !important;

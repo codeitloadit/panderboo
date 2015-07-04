@@ -130,6 +130,10 @@ angular.module('panderboo.controllers', ['firebase'])
                 $scope.text = '';
             }
         };
+
+        $scope.tap = function (conversation) {
+            $state.go('tab.conversation-detail', {conversationObj: angular.toJson(conversation)});
+        };
     })
 
     .controller('SettingsCtrl', function ($scope, $state, AuthData, Friends, Conversations, Messages) {
